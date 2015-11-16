@@ -1,5 +1,6 @@
 [![License](https://img.shields.io/badge/License-Apache%20Commons%202.0-brightgreen.svg)](http://www.apache.org/licenses/LICENSE-2.0.txt)
 [![Gitter](https://img.shields.io/badge/Gitter-join%20chat-brightgreen.svg)](https://gitter.im/testIT-WebTester/webtester-core)
+[![Build Status](https://travis-ci.org/testIT-WebTester/webtester-core.svg?branch=master)](https://travis-ci.org/testIT-WebTester/webtester-core)
 
 # testIT WebTester
 testIT WebTester is a web-application UI test automation framework based on Selenium (http://www.seleniumhq.org).

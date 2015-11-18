@@ -20,7 +20,7 @@ It is the product of years of consulting experience in various projects and aims
 Until our infrastructure is up and running you can send any questions to our technical lead: stefan.ludwig@novatec-gmbh.de
 
 ### Documentation
-The [user documentation](https://documentation.novatec-gmbh.de/display/TESTIT/WebTester) provides in-depth documentation on all the features.
+The [user documentation](https://testit-webtester.atlassian.net/wiki) provides in-depth documentation on all the features.
 If you have further questions please get in touch with us.
 
 ### Contribute / Issues

@@ -2,6 +2,7 @@
 
 ## Welcome to the testIT WebTester documentation!
 
+- [Getting Started](chapters/getting-started.md)
 - [Browser](chapters/browser.md)
 - [Configuration](chapters/configuration.md)
 - [Event System](chapters/event-system.md)
@@ -28,6 +29,7 @@
   - Integration
     - [Spring 4](chapters/support-spring4.md)
 - Advanced Topics
+  - [JavaScript and Ajax Handling](chapters/javascript-ajax.md)
   - [Ad-Hoc finding of Page Objects](chapters/ad-hoc-find.md)
 
 

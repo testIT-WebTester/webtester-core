@@ -17,15 +17,14 @@ It is the product of years of consulting experience in various projects and aims
 - If you must, Selenium is always just a method call away.
 
 ### Get in touch
-Until our infrastructure is up and running you can send any questions to our technical lead: stefan.ludwig@novatec-gmbh.de
+You can reach contact us using [Gitter](https://gitter.im/testIT-WebTester/webtester-core) or create an [issue](https://github.com/testIT-WebTester/webtester-core/issues).
 
 ### Documentation
-The [user documentation](https://documentation.novatec-gmbh.de/display/TESTIT/WebTester) provides in-depth documentation on all the features.
+The [user documentation](documentation/README.md) is part of the repository and provides in-depth documentation on all the features.
 If you have further questions please get in touch with us.
 
 ### Contribute / Issues
-The contribution and bug processes are not defined, yet.
-For the mean time feel free to contact us with any problems or contributions you might have.
+The contribution process is not yet defined. But if you experience any issues please use GitHub's [issue](https://github.com/testIT-WebTester/webtester-core/issues) system to tell us about it!
 
 ### Licensing
 testIT WebTester is licensed under [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt).

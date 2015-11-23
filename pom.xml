@@ -55,7 +55,6 @@
 		<java.version>1.7</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
 		<project.root>.</project.root>
 		<rules.pmd>${project.root}/development/pmd_rules.xml</rules.pmd>
 		<rules.checkstyle>${project.root}/development/checkstyle_rules.xml</rules.checkstyle>
@@ -101,6 +100,8 @@
 		<version.findbugs.maven.plugin>3.0.0</version.findbugs.maven.plugin>
 		<version.cobertura.maven.plugin>2.6</version.cobertura.maven.plugin>
 		<version.license.maven.plugin>1.8</version.license.maven.plugin>
+		<version.maven.gpg.plugin>1.5</version.maven.gpg.plugin>
+		<version.maven.nexus.staging.plugin>1.6.3</version.maven.nexus.staging.plugin>
 
 	</properties>
 
@@ -274,7 +275,6 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
 			</plugin>
-
 		</plugins>
 		<pluginManagement>
 			<plugins>
@@ -524,6 +524,33 @@
 					</executions>
 				</plugin>
 
+				<!-- signing jars plugin -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-gpg-plugin</artifactId>
+					<version>${version.maven.gpg.plugin}</version>
+					<executions>
+						<execution>
+							<id>sign-artifacts</id>
+							<phase>verify</phase>
+							<goals>
+								<goal>sign</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<!-- maven central release plugin -->
+				<plugin>
+					<groupId>org.sonatype.plugins</groupId>
+					<artifactId>nexus-staging-maven-plugin</artifactId>
+					<version>${version.maven.nexus.staging.plugin}</version>
+					<extensions>true</extensions>
+					<configuration>
+						<serverId>ossrh</serverId>
+						<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+						<autoReleaseAfterClose>false</autoReleaseAfterClose>
+					</configuration>
+				</plugin>
 				<!-- other plugins -->
 
 				<plugin>
@@ -652,7 +679,24 @@
 				</plugins>
 			</build>
 		</profile>
-
+		
+		<profile>
+			<id>maven-central</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+					</plugin>
+					<plugin>
+						<groupId>org.sonatype.plugins</groupId>
+						<artifactId>nexus-staging-maven-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		
+		
 		<profile>
 			<id>skip-tests</id>
 			<properties>
@@ -679,6 +723,16 @@
 			<id>pmo</id>
 			<name>Pascal Moll</name>
 			<email>pascal.moll@novatec-gmbh.de</email>
+			<organization>NovaTec Consulting GmbH</organization>
+			<organizationUrl>http://www.novatec-gmbh.de</organizationUrl>
+			<roles>
+				<role>developer</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>benhamidene</id>
+			<name>Anis Ben Hamidene</name>
+			<email>anis.benhamidene@novatec-gmbh.de</email>
 			<organization>NovaTec Consulting GmbH</organization>
 			<organizationUrl>http://www.novatec-gmbh.de</organizationUrl>
 			<roles>

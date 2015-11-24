@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>info.novatec.testit</groupId>
 		<artifactId>webtester</artifactId>
-		<version>1.0.0</version>
+		<version>1.0.1</version>
 	</parent>
 
 	<artifactId>webtester-support-ie</artifactId>

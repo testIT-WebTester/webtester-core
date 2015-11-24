@@ -56,6 +56,19 @@ public final class EventSystem {
     }
 
     /**
+     * Unregisters an {@link EventListener event listener}. It will no longer be
+     * informed of any {@link Event events} that are reported by the framework.
+     *
+     * @param listener the {@link EventListener event listener} to unregister.
+     * @since 0.9.0
+     * @deprecated use {@link #deregisterListener(EventListener)} instead - will be removed with release of v1.1.0
+     */
+    @Deprecated
+    public static void unregisterListener(EventListener listener) {
+        deregisterListener(listener);
+    }
+
+    /**
      * Removes all {@link EventListener event listeners} from the registry.
      *
      * @since 0.9.0

@@ -217,6 +217,105 @@ public final class Waits {
     }
 
     /**
+     * Wait until the given {@linkplain PageObject page object} is present in
+     * the DOM. Uses the configured default timeout.
+     *
+     * @param pageObject the page object
+     * @throws TimeoutException if element never became present
+     * @since 0.9.6
+     * @deprecated use
+     * <code>waitUntil(pageObject, Conditions.is(Conditions.present()));</code>
+     * instead. Will be removed with 1.1.0!
+     */
+    @Deprecated
+    public static void waitUntilPresent(PageObject pageObject) {
+        waitUntilPresent(pageObject, getWaitTimeout(pageObject));
+    }
+
+    /**
+     * Wait until the given {@linkplain PageObject page object} is present in
+     * the DOM.
+     *
+     * @param pageObject the page object
+     * @param timeout the maximum time to wait in seconds
+     * @throws TimeoutException if element never became present
+     * @since 0.9.6
+     * @deprecated use
+     * <code>waitSecondsUntil(timeout, pageObject, Conditions.is(Conditions.present()));</code>
+     * instead. Will be removed with 1.1.0!
+     */
+    @Deprecated
+    public static void waitUntilPresent(PageObject pageObject, final int timeout) {
+        waitSecondsUntil(timeout, pageObject, Conditions.present());
+    }
+
+    /**
+     * Wait until the given {@linkplain PageObject page object} is visible on
+     * the page. Uses the configured default timeout.
+     *
+     * @param pageObject the page object
+     * @throws TimeoutException if element never became visible
+     * @since 0.9.6
+     * @deprecated use
+     * <code>waitUntil(pageObject, Conditions.is(Conditions.visible()));</code>
+     * instead. Will be removed with 1.1.0!
+     */
+    @Deprecated
+    public static void waitUntilVisible(PageObject pageObject) {
+        waitUntilVisible(pageObject, getWaitTimeout(pageObject));
+    }
+
+    /**
+     * Wait until the given {@linkplain PageObject page object} is visible on
+     * the page.
+     *
+     * @param pageObject the page object
+     * @param timeout the maximum time to wait in seconds
+     * @throws TimeoutException if element never became visible
+     * @since 0.9.6
+     * @deprecated use
+     * <code>waitSecondsUntil(timeout, pageObject, Conditions.is(Conditions.visible()));</code>
+     * instead. Will be removed with 1.1.0!
+     */
+    @Deprecated
+    public static void waitUntilVisible(PageObject pageObject, final int timeout) {
+        waitSecondsUntil(timeout, pageObject, Conditions.visible());
+    }
+
+    /**
+     * Wait until the given {@linkplain PageObject page object} is not visible
+     * on the page. Uses the configured default timeout.
+     *
+     * @param pageObject the page object
+     * @throws TimeoutException if element never became invisible
+     * @since 0.9.6
+     * @deprecated use
+     * <code>waitUntil(pageObject, Conditions.is(Conditions.invisible()));</code>
+     * instead. Will be removed with 1.1.0!
+     */
+    @Deprecated
+    public static void waitUntilInvisible(PageObject pageObject) {
+        waitUntilInvisible(pageObject, getWaitTimeout(pageObject));
+    }
+
+    /**
+     * Wait until the given {@linkplain PageObject page object} is not visible
+     * on the page.
+     *
+     * @param pageObject the page object
+     * @param timeout the maximum time to wait in seconds
+     * @throws TimeoutException if element never became invisible
+     * @since 0.9.6
+     * @deprecated use
+     * <code>waitSecondsUntil(timeout, pageObject, Conditions.is(Conditions.invisible()));</code>
+     * instead. Will be removed with 1.1.0!
+     */
+    @Deprecated
+    public static void waitUntilInvisible(PageObject pageObject, final int timeout) {
+        waitSecondsUntil(timeout, pageObject, Conditions.invisible());
+    }
+
+    /**
      * Waits until the given {@link Predicate condition} is met by the provided
      * {@link PageObject page object}. The page object's browser's configuration
      * is used to retrieve the timeout (in seconds) and check interval to use.

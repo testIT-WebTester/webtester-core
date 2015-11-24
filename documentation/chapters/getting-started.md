@@ -136,7 +136,7 @@ import info.novatec.testit.webtester.pageobjects.TextField;
  
 public class TwitterLogin extends PageObject {
  
-    @IdentifyUsing ( method = Method.CLASS, value = "primary-btn" )
+    @IdentifyUsing ( method = Method.CLASS_NAME, value = "primary-btn" )
     private Button loginButton;
     @IdentifyUsing ( "signin-email" )
     private TextField usernameField;

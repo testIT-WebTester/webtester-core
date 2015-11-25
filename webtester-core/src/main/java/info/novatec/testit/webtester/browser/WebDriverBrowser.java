@@ -376,7 +376,7 @@ public class WebDriverBrowser implements Browser {
                 TakesScreenshot takesScreenshot = ( TakesScreenshot ) getWebDriver();
                 File tempScreenshot = takesScreenshot.getScreenshotAs(OutputType.FILE);
 
-                String fileName = fileNameWithoutSuffix + ".jpg";
+                String fileName = fileNameWithoutSuffix + ".png";
                 File screenshot = new File(targetFolder, fileName);
 
                 try {

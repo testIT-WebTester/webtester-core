@@ -82,7 +82,7 @@ public class BrowserIntegrationTest extends AbstractWebTesterIntegrationTest {
 
         assertThat(file.isFile(), is(true));
         assertThat(file.getParentFile(), is(temp.getRoot()));
-        assertThat(file.getName(), is(fileNameWithoutSuffix + ".jpg"));
+        assertThat(file.getName(), is(fileNameWithoutSuffix + ".png"));
 
     }
 

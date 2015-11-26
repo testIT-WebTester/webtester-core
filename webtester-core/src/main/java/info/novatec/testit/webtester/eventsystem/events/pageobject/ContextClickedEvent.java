@@ -7,21 +7,21 @@ import info.novatec.testit.webtester.pageobjects.PageObject;
 
 
 /**
- * This {@link Event event} occurs whenever a double click is executed on an
+ * This {@link Event event} occurs whenever a context click is executed on an
  * element.
  *
- * @since 0.9.0
+ * @since 1.1.0
  */
 @SuppressWarnings("serial")
-public class DoubleClickedEvent extends AbstractPageObjectEvent {
+public class ContextClickedEvent extends AbstractPageObjectEvent {
 
-    public DoubleClickedEvent(PageObject pageObject) {
+    public ContextClickedEvent(PageObject pageObject) {
         super(pageObject);
     }
 
     @Override
     public String getEventMessage() {
-        return format("double clicked on %s", getSubjectName());
+        return format("context clicked on %s", getSubjectName());
     }
 
 }

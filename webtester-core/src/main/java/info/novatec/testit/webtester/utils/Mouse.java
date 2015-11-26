@@ -15,6 +15,7 @@ import info.novatec.testit.webtester.api.exceptions.PageObjectIsDisabledExceptio
 import info.novatec.testit.webtester.api.exceptions.PageObjectIsInvisibleException;
 import info.novatec.testit.webtester.eventsystem.EventSystem;
 import info.novatec.testit.webtester.eventsystem.events.pageobject.ClickedEvent;
+import info.novatec.testit.webtester.eventsystem.events.pageobject.ContextClickedEvent;
 import info.novatec.testit.webtester.eventsystem.events.pageobject.DoubleClickedEvent;
 import info.novatec.testit.webtester.pageobjects.PageObject;
 
@@ -72,6 +73,33 @@ public final class Mouse {
             public void execute(PageObject po) {
                 startActionSequence(po).doubleClick(po.getWebElement()).perform();
                 EventSystem.fireEvent(new DoubleClickedEvent(po));
+                Marker.markAsUsed(po);
+            }
+
+        });
+    }
+
+    /**
+     * Executes a single context-click on the given {@linkplain PageObject page
+     * object}. Will throw an exception if the page object is disabled or
+     * invisible!
+     * <p>
+     * The actual behavior might vary between different {@link WebDriver}
+     * implementations. Some implementations might move the actual mouse cursor,
+     * some might simulate the behavior.
+     *
+     * @param pageObject the page object the context-click should be executed on
+     * @throws PageObjectIsDisabledException if the page object is disabled
+     * @throws PageObjectIsInvisibleException if the page object is invisible
+     * @since 1.1.0
+     */
+    public static void contextClick(PageObject pageObject) {
+        pageObject.executeAction(new PageObjectCallback() {
+
+            @Override
+            public void execute(PageObject po) {
+                startActionSequence(po).contextClick(po.getWebElement()).perform();
+                EventSystem.fireEvent(new ContextClickedEvent(po));
                 Marker.markAsUsed(po);
             }
 

@@ -6,6 +6,7 @@ The `Mouse` utility class contains all kinds of methods which allow you to use o
 
 - `click(PageObject)`
 - `doubleClick(PageObject)`
+- `contextClick(PageObject)`
 - `moveTo(PageObject)`
 - `moveToEach(PageObject, PageObject...)`
 - `moveToEach(Collection<PageObject>)`
@@ -15,6 +16,9 @@ Executes a click on the given `PageObject` by first moving the mouse to the cent
 
 ## Mouse.doubleClick()
 Executes a double click on the given `PageObject` by first moving the mouse to the center of it.
+
+## Mouse.contextClick()
+Executes a context click on the given `PageObject` by first moving the mouse to the center of it.
 
 ## Mouse.moveToEach()
 Moves the mouse to each of the given `PageObject`s in turn. The page objects have to be visible in order to move

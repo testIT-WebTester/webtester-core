@@ -7,12 +7,11 @@ import javax.annotation.PostConstruct;
 
 import org.junit.Test;
 
-import integration.AbstractWebTesterIntegrationTest;
-
 import info.novatec.testit.webtester.api.annotations.IdentifyUsing;
 import info.novatec.testit.webtester.pageobjects.Button;
 import info.novatec.testit.webtester.pageobjects.PageObject;
 import info.novatec.testit.webtester.utils.Mouse;
+import integration.AbstractWebTesterIntegrationTest;
 
 
 public class MouseIntegrationTest extends AbstractWebTesterIntegrationTest {
@@ -64,6 +63,19 @@ public class MouseIntegrationTest extends AbstractWebTesterIntegrationTest {
 
     }
 
+    @Test
+    public void testThatContextClickingAPageObjectWithTheMouseIsPossible() {
+
+        MoveTestPage page = getBrowser().create(MoveTestPage.class);
+
+        /* Context click the context click button. */
+        Mouse.contextClick(page.clickContextClickButton);
+
+        /* The target button should now be displayed after. */
+        assertThat(page.clickTargetButton.isVisible(), is(true));
+
+    }
+
     public static class MoveTestPage extends PageObject {
 
         @IdentifyUsing("moveTo_startButton")
@@ -77,6 +89,8 @@ public class MouseIntegrationTest extends AbstractWebTesterIntegrationTest {
         Button clickSingleClickButton;
         @IdentifyUsing("click_doubleClickButton")
         Button clickDoubleClickButton;
+        @IdentifyUsing("click_contextClickButton")
+        Button clickContextClickButton;
         @IdentifyUsing("click_targetButton")
         Button clickTargetButton;
 

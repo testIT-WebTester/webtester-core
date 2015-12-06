@@ -1,4 +1,4 @@
-[![License](https://img.shields.io/badge/License-Apache%20Commons%202.0-brightgreen.svg)](http://www.apache.org/licenses/LICENSE-2.0.txt)
+[![License](https://img.shields.io/badge/License-Apache%20License%202.0-brightgreen.svg)](http://www.apache.org/licenses/LICENSE-2.0.txt)
 [![Gitter](https://img.shields.io/badge/Gitter-join%20chat-brightgreen.svg)](https://gitter.im/testIT-WebTester/webtester-core)
 [![Build Status](https://travis-ci.org/testIT-WebTester/webtester-core.svg?branch=master)](https://travis-ci.org/testIT-WebTester/webtester-core)
 [![Issue Count](https://codeclimate.com/github/testIT-WebTester/webtester-core/badges/issue_count.svg)](https://codeclimate.com/github/testIT-WebTester/webtester-core)

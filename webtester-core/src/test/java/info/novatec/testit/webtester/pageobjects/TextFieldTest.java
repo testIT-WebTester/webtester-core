@@ -8,6 +8,7 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import org.apache.commons.lang.StringUtils;
@@ -16,6 +17,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InOrder;
 import org.mockito.InjectMocks;
+import org.openqa.selenium.Keys;
 
 import info.novatec.testit.webtester.AbstractPageObjectTest;
 import info.novatec.testit.webtester.api.exceptions.PageObjectIsDisabledException;
@@ -201,6 +203,15 @@ public class TextFieldTest extends AbstractPageObjectTest {
     public void testThatAppendingTextOnDisabledFieldThrowsException() {
         elementIsDisabled();
         cut.appendText("foo");
+    }
+
+    /* pressing ENTER */
+
+    @Test
+    public void testThatPressingEnterSendsCorrectKey() {
+        cut.pressEnter();
+        verify(webElement).sendKeys(Keys.ENTER);
+        verifyNoMoreInteractions(webElement);
     }
 
     /* correctness of class */

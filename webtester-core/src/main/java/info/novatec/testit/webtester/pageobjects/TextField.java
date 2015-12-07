@@ -3,6 +3,7 @@ package info.novatec.testit.webtester.pageobjects;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,7 @@ import com.google.common.collect.Sets;
 import info.novatec.testit.webtester.api.callbacks.PageObjectCallback;
 import info.novatec.testit.webtester.api.exceptions.PageObjectIsDisabledException;
 import info.novatec.testit.webtester.api.exceptions.PageObjectIsInvisibleException;
+import info.novatec.testit.webtester.api.exceptions.StaleElementRecoveryException;
 import info.novatec.testit.webtester.api.pageobjects.traits.HasText;
 import info.novatec.testit.webtester.eventsystem.events.pageobject.TextAppendedEvent;
 import info.novatec.testit.webtester.eventsystem.events.pageobject.TextClearedEvent;
@@ -88,6 +90,11 @@ public class TextField extends PageObject implements HasText {
     /**
      * Sets the given text by replacing whatever text is currently set for the
      * {@link TextField text field}.
+     * <p>
+     * <b>Note:</b> is is not advised to try and send {@link Keys} via this method!
+     * Doing so may in some cases lead to unintended side effects. I.e. sending ENTER
+     * to a search field will cause a {@link StaleElementRecoveryException} if this action
+     * navigates to another page.
      *
      * @param textToSet the text to set
      * @return the same instance for fluent API use
@@ -117,6 +124,11 @@ public class TextField extends PageObject implements HasText {
     /**
      * Appends the given text to whatever text is currently set for the
      * {@link TextField text field}.
+     * <p>
+     * <b>Note:</b> is is not advised to try and send {@link Keys} via this method!
+     * Doing so may in some cases lead to unintended side effects. I.e. sending ENTER
+     * to a search field will cause a {@link StaleElementRecoveryException} if this action
+     * navigates to another page.
      *
      * @param textToAppend the text to append
      * @return the same instance for fluent API use
@@ -140,6 +152,26 @@ public class TextField extends PageObject implements HasText {
 
         });
         return this;
+    }
+
+    /**
+     * Presses enter on this text field. This can be for example be used to send a form where the text
+     * field is included.
+     * <p>
+     * This method does <u>not</u> return this instance for fluent API because pressing ENTER is usually done in
+     * order to send a form or otherwise execute a potentially terminal action.
+     *
+     * @since 1.1.0
+     */
+    public void pressEnter() {
+        executeAction(new PageObjectCallback() {
+
+            @Override
+            public void execute(PageObject pageObject) {
+                pageObject.getWebElement().sendKeys(Keys.ENTER);
+            }
+
+        });
     }
 
     @Override

@@ -12,7 +12,7 @@ import info.novatec.testit.webtester.pageobjects.TextArea;
  *
  * @since 0.9.7
  */
-public class TextAreaMatcher extends TextFieldMatcher {
+public final class TextAreaMatcher extends TextFieldMatcher {
 
     /**
      * Returns whether the {@link TextArea text area} has a certain number of
@@ -72,7 +72,7 @@ public class TextAreaMatcher extends TextFieldMatcher {
 
     }
 
-    protected TextAreaMatcher() {
+    private TextAreaMatcher() {
         // utility constructor
     }
 

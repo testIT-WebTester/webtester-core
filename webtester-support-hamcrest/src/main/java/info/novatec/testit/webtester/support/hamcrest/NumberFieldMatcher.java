@@ -12,7 +12,7 @@ import info.novatec.testit.webtester.pageobjects.NumberField;
  *
  * @since 0.9.7
  */
-public class NumberFieldMatcher extends TextFieldMatcher {
+public final class NumberFieldMatcher extends TextFieldMatcher {
 
     /**
      * Returns whether the value of the {@link NumberField number field}}
@@ -44,7 +44,7 @@ public class NumberFieldMatcher extends TextFieldMatcher {
 
     }
 
-    protected NumberFieldMatcher() {
+    private NumberFieldMatcher() {
         // utility constructor
     }
 

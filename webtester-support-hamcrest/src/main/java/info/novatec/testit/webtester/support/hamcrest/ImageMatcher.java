@@ -12,7 +12,7 @@ import info.novatec.testit.webtester.pageobjects.Image;
  *
  * @since 0.9.7
  */
-public class ImageMatcher extends PageObjectMatcher {
+public final class ImageMatcher extends PageObjectMatcher {
 
     /**
      * Returns whether the source path of the {@link Image image} matches the
@@ -70,7 +70,7 @@ public class ImageMatcher extends PageObjectMatcher {
         };
     }
 
-    protected ImageMatcher() {
+    private ImageMatcher() {
         // utility constructor
     }
 

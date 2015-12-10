@@ -12,7 +12,7 @@ import info.novatec.testit.webtester.pageobjects.Button;
  *
  * @since 0.9.7
  */
-public class ButtonMatcher extends PageObjectMatcher {
+public final class ButtonMatcher extends PageObjectMatcher {
 
     /**
      * Returns whether the {@link Button button} has a certain value.
@@ -72,7 +72,7 @@ public class ButtonMatcher extends PageObjectMatcher {
 
     }
 
-    protected ButtonMatcher() {
+    private ButtonMatcher() {
         // utility constructor
     }
 

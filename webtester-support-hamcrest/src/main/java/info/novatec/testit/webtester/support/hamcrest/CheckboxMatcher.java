@@ -12,7 +12,7 @@ import info.novatec.testit.webtester.pageobjects.Checkbox;
  *
  * @since 0.9.7
  */
-public class CheckboxMatcher extends PageObjectMatcher {
+public final class CheckboxMatcher extends PageObjectMatcher {
 
     /**
      * Returns whether the {@link Checkbox checkbox} is selected.
@@ -41,7 +41,7 @@ public class CheckboxMatcher extends PageObjectMatcher {
         };
     }
 
-    protected CheckboxMatcher() {
+    private CheckboxMatcher() {
         // utility constructor
     }
 

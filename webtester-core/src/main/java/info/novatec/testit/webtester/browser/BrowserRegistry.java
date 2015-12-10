@@ -75,7 +75,7 @@ public final class BrowserRegistry {
         return browser;
     }
 
-    static void logTraceInformationAboutBrowserLookup(BrowserIdentification identification, Browser browser) {
+    private static void logTraceInformationAboutBrowserLookup(BrowserIdentification identification, Browser browser) {
         if (browser != null) {
             logger.trace("looking up browser for identifier: {} - FOUND", identification);
         } else {
@@ -97,7 +97,7 @@ public final class BrowserRegistry {
         }
     }
 
-    static List<Browser> threadSafelyGetBrowsers() {
+    private static List<Browser> threadSafelyGetBrowsers() {
         return new LinkedList<Browser>(ACTIVE_BROWSER.values());
     }
 

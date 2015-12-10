@@ -13,7 +13,7 @@ import info.novatec.testit.webtester.pageobjects.TableRow;
  *
  * @since 0.9.7
  */
-public class TableMatcher extends PageObjectMatcher {
+public final class TableMatcher extends PageObjectMatcher {
 
     /**
      * Returns whether the {@link Table table} has a certain number of
@@ -43,7 +43,7 @@ public class TableMatcher extends PageObjectMatcher {
         };
     }
 
-    protected TableMatcher() {
+    private TableMatcher() {
         // utility constructor
     }
 

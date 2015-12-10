@@ -12,7 +12,7 @@ import info.novatec.testit.webtester.pageobjects.IFrame;
  *
  * @since 0.9.7
  */
-public class IFrameMatcher extends PageObjectMatcher {
+public final class IFrameMatcher extends PageObjectMatcher {
 
     /**
      * Returns whether the source path of the {@link IFrame} matches the
@@ -44,7 +44,7 @@ public class IFrameMatcher extends PageObjectMatcher {
 
     }
 
-    protected IFrameMatcher() {
+    private IFrameMatcher() {
         // utility constructor
     }
 

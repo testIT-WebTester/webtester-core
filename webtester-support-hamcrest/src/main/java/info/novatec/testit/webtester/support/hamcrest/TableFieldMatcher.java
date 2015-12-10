@@ -12,7 +12,7 @@ import info.novatec.testit.webtester.pageobjects.TableField;
  *
  * @since 0.9.7
  */
-public class TableFieldMatcher extends PageObjectMatcher {
+public final class TableFieldMatcher extends PageObjectMatcher {
 
     /**
      * Returns whether the {@link TableField table field} is a header field.
@@ -42,7 +42,7 @@ public class TableFieldMatcher extends PageObjectMatcher {
         };
     }
 
-    protected TableFieldMatcher() {
+    private TableFieldMatcher() {
         // utility constructor
     }
 

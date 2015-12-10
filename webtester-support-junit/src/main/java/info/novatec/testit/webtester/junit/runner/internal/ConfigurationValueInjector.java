@@ -16,10 +16,6 @@ import info.novatec.testit.webtester.junit.annotations.ConfigurationValue;
 
 public final class ConfigurationValueInjector {
 
-    private interface Injector {
-        void injectInto(Configuration config, String key, Field field, Object target) throws IllegalAccessException;
-    }
-
     private static final String UNINJECTABLE_FIELD_TYPE = "cannot inject configuration values into fields of type ";
     private static final Object STATIC_TARGET = null;
 
@@ -144,6 +140,10 @@ public final class ConfigurationValueInjector {
 
     private ConfigurationValueInjector() {
         // utility constructor
+    }
+
+    private interface Injector {
+        void injectInto(Configuration config, String key, Field field, Object target) throws IllegalAccessException;
     }
 
 }

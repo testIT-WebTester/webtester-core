@@ -28,7 +28,7 @@ import info.novatec.testit.webtester.config.adapters.LocalFileConfigurationAdapt
  * @see ConfigurationExporter
  * @since 0.9.7
  */
-public final class DefaultConfigurationBuilder extends BaseConfigurationBuilder {
+public class DefaultConfigurationBuilder extends BaseConfigurationBuilder {
 
     public static Configuration create() {
         return new DefaultConfigurationBuilder().build();

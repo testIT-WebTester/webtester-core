@@ -25,7 +25,7 @@ import info.novatec.testit.webtester.pageobjects.TextField;
  *
  * @since 0.9.8
  */
-public class WebTesterAssertions extends Assertions {
+public final class WebTesterAssertions extends Assertions {
 
     public static ButtonAssert assertThat(Button actual) {
         return new ButtonAssert(actual);
@@ -77,6 +77,10 @@ public class WebTesterAssertions extends Assertions {
 
     public static TextFieldAssert assertThat(TextField actual) {
         return new TextFieldAssert(actual);
+    }
+
+    private WebTesterAssertions() {
+        // utility constructor
     }
 
 }

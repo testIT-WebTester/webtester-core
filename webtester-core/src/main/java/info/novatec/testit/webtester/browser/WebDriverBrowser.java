@@ -71,31 +71,6 @@ public class WebDriverBrowser implements Browser {
 
     private static final Logger logger = LoggerFactory.getLogger(WebDriverBrowser.class);
 
-    /**
-     * Starts the creation of a new {@link WebDriverBrowser browser} by creating
-     * a {@link WebDriverBrowserBuilder builder} using the given
-     * {@link WebDriver web driver} as a starting point.
-     *
-     * @param webDriver the web driver to use
-     * @return the created builder
-     * @since 0.9.6
-     */
-    public static BrowserBuilder forWebDriver(WebDriver webDriver) {
-        return new WebDriverBrowserBuilder(webDriver);
-    }
-
-    /**
-     * Creates a new {@link WebDriverBrowser browser} using the given
-     * {@link WebDriver web driver}.
-     *
-     * @param webDriver the web driver to use
-     * @return the created browser
-     * @since 0.9.6
-     */
-    public static Browser buildForWebDriver(WebDriver webDriver) {
-        return forWebDriver(webDriver).build();
-    }
-
     private PageObjectFactory pageObjectFactory;
     private Configuration configuration;
 
@@ -592,6 +567,33 @@ public class WebDriverBrowser implements Browser {
 
     public void setConfiguration(Configuration configuration) {
         this.configuration = configuration;
+    }
+
+    /* factories */
+
+    /**
+     * Starts the creation of a new {@link WebDriverBrowser browser} by creating
+     * a {@link WebDriverBrowserBuilder builder} using the given
+     * {@link WebDriver web driver} as a starting point.
+     *
+     * @param webDriver the web driver to use
+     * @return the created builder
+     * @since 0.9.6
+     */
+    public static BrowserBuilder forWebDriver(WebDriver webDriver) {
+        return new WebDriverBrowserBuilder(webDriver);
+    }
+
+    /**
+     * Creates a new {@link WebDriverBrowser browser} using the given
+     * {@link WebDriver web driver}.
+     *
+     * @param webDriver the web driver to use
+     * @return the created browser
+     * @since 0.9.6
+     */
+    public static Browser buildForWebDriver(WebDriver webDriver) {
+        return forWebDriver(webDriver).build();
     }
 
 }

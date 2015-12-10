@@ -16,33 +16,6 @@ import info.novatec.testit.webtester.utils.Identifications;
 @Internal
 public class PageObjectModel {
 
-    public static PageObjectModel forPage(Browser browser) {
-        PageObjectModel metaData = new PageObjectModel();
-        metaData.browser = browser;
-        metaData.identification = Identifications.tagName("html");
-        return metaData;
-    }
-
-    public static PageObjectModel forPageFragment(Browser browser, Identification identification) {
-        return forPageFragment(browser, identification, null);
-    }
-
-    public static PageObjectModel forPageFragment(Browser browser, Identification identification, PageObject parent) {
-        PageObjectModel metaData = new PageObjectModel();
-        metaData.browser = browser;
-        metaData.identification = identification;
-        metaData.parent = parent;
-        return metaData;
-    }
-
-    public static PageObjectModel forPageObjectListElement(Browser browser, PageObject parent) {
-        PageObjectModel metaData = new PageObjectModel();
-        metaData.browser = browser;
-        metaData.parent = parent;
-        metaData.partOfList = true;
-        return metaData;
-    }
-
     private Browser browser;
     private Identification identification;
     private PageObject parent;
@@ -103,6 +76,35 @@ public class PageObjectModel {
 
     public boolean isPartOfList() {
         return partOfList;
+    }
+
+    /* factories */
+
+    public static PageObjectModel forPage(Browser browser) {
+        PageObjectModel metaData = new PageObjectModel();
+        metaData.browser = browser;
+        metaData.identification = Identifications.tagName("html");
+        return metaData;
+    }
+
+    public static PageObjectModel forPageFragment(Browser browser, Identification identification) {
+        return forPageFragment(browser, identification, null);
+    }
+
+    public static PageObjectModel forPageFragment(Browser browser, Identification identification, PageObject parent) {
+        PageObjectModel metaData = new PageObjectModel();
+        metaData.browser = browser;
+        metaData.identification = identification;
+        metaData.parent = parent;
+        return metaData;
+    }
+
+    public static PageObjectModel forPageObjectListElement(Browser browser, PageObject parent) {
+        PageObjectModel metaData = new PageObjectModel();
+        metaData.browser = browser;
+        metaData.parent = parent;
+        metaData.partOfList = true;
+        return metaData;
     }
 
 }

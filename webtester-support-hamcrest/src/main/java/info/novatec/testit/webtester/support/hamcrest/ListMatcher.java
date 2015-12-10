@@ -12,7 +12,7 @@ import info.novatec.testit.webtester.pageobjects.List;
  *
  * @since 0.9.7
  */
-public class ListMatcher extends PageObjectMatcher {
+public final class ListMatcher extends PageObjectMatcher {
 
     /**
      * Returns whether the number of items the {@link List list} contains
@@ -71,7 +71,7 @@ public class ListMatcher extends PageObjectMatcher {
 
     }
 
-    protected ListMatcher() {
+    private ListMatcher() {
         // utility constructor
     }
 

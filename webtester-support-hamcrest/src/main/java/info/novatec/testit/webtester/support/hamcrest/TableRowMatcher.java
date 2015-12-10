@@ -13,7 +13,7 @@ import info.novatec.testit.webtester.pageobjects.TableRow;
  *
  * @since 0.9.7
  */
-public class TableRowMatcher extends PageObjectMatcher {
+public final class TableRowMatcher extends PageObjectMatcher {
 
     /**
      * Returns whether the {@link TableRow row} contains header
@@ -71,7 +71,7 @@ public class TableRowMatcher extends PageObjectMatcher {
         };
     }
 
-    protected TableRowMatcher() {
+    private TableRowMatcher() {
         // utility constructor
     }
 

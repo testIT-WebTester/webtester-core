@@ -12,7 +12,7 @@ import info.novatec.testit.webtester.pageobjects.RadioButton;
  *
  * @since 0.9.7
  */
-public class RadioButtonMatcher extends PageObjectMatcher {
+public final class RadioButtonMatcher extends PageObjectMatcher {
 
     /**
      * Returns whether the {@link RadioButton radio button} is selected.
@@ -43,7 +43,7 @@ public class RadioButtonMatcher extends PageObjectMatcher {
         };
     }
 
-    protected RadioButtonMatcher() {
+    private RadioButtonMatcher() {
         // utility constructor
     }
 

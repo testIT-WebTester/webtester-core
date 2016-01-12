@@ -9,6 +9,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.Deque;
 import java.util.List;
+import java.util.Set;
+
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang.StringUtils;
@@ -227,10 +229,34 @@ public final class DefaultPageObjectFactory implements PageObjectFactory {
     }
 
     private <T extends PageObject> void checkVisibilityOfAnnotatedFields(T pageInstance, Class<T> pageClazz) {
-        Deque<Class<?>> classStack = ReflectionUtils.getClassAncestry(pageClazz);
-        while (!classStack.isEmpty()) {
-            checkVisibilityOfAnnotatedFieldsOfClass(pageInstance, classStack.pop());
+        if (shouldCheckVisibilty(pageInstance)) {
+            Deque<Class<?>> classStack = ReflectionUtils.getClassAncestry(pageClazz);
+            while (!classStack.isEmpty()) {
+                checkVisibilityOfAnnotatedFieldsOfClass(pageInstance, classStack.pop());
+            }
         }
+    }
+
+    private <T extends PageObject> boolean shouldCheckVisibilty(T pageInstance) {
+        PageObject parent = pageInstance.getParent();
+        if (parent == null) {
+            return true;
+        }
+
+        Set<Field> parentFields = ReflectionUtils.getAllFieldsOfClassHierarchy(parent.getClass());
+        for (Field field : parentFields) {
+            if (field.getDeclaringClass().isAssignableFrom(PageObject.class)) {
+                try {
+                    Object fieldValue = ReflectionUtils.forceGetFieldValue(field, parent);
+                    if (fieldValue != null && fieldValue.equals(pageInstance)) {
+                        return isAnnotatedWithVisible(field);
+                    }
+                } catch (ReflectiveOperationException e) {
+                    continue;
+                }
+            }
+        }
+        return false;
     }
 
     private <T extends PageObject> void checkVisibilityOfAnnotatedFieldsOfClass(T pageInstance, Class<?> clazz) {

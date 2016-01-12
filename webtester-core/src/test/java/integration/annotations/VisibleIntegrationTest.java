@@ -1,20 +1,18 @@
 package integration.annotations;
 
-import java.util.List;
-
-import org.junit.Test;
-
-import integration.AbstractWebTesterIntegrationTest;
-
 import info.novatec.testit.webtester.api.annotations.IdentifyUsing;
 import info.novatec.testit.webtester.api.annotations.Visible;
-import info.novatec.testit.webtester.api.browser.Browser;
 import info.novatec.testit.webtester.api.enumerations.Method;
 import info.novatec.testit.webtester.api.exceptions.PageObjectFactoryException.VisiblePageObjectFieldException;
 import info.novatec.testit.webtester.api.exceptions.PageObjectFactoryException.VisiblePageObjectListFieldException;
 import info.novatec.testit.webtester.pageobjects.PageObject;
 import info.novatec.testit.webtester.pageobjects.TextField;
+import info.novatec.testit.webtester.utils.Asserts;
+import integration.AbstractWebTesterIntegrationTest;
 
+import java.util.List;
+
+import org.junit.Test;
 
 public class VisibleIntegrationTest extends AbstractWebTesterIntegrationTest {
 
@@ -25,21 +23,20 @@ public class VisibleIntegrationTest extends AbstractWebTesterIntegrationTest {
 
     @Test
     public void testThatVisibleAnnotationIsUsedToCheckVisibilityOfPageObject() {
-        getBrowser().create(SingleVisiblePage.class);
-        // nothing to assert because initialization was successful
+        SingleVisiblePage singleVisiblePage = getBrowser().create(SingleVisiblePage.class);
+        Asserts.assertVisible(singleVisiblePage);
     }
 
     @Test
     public void testThatVisibleAnnotationIsUsedToCheckVisibilityOfPageObjectList() {
-        getBrowser().create(MultiVisiblePage.class);
-        // nothing to assert because initialization was successful
+        MultiVisiblePage multiVisiblePage = getBrowser().create(MultiVisiblePage.class);
+        Asserts.assertVisible(multiVisiblePage);
     }
 
     @Test(expected = VisiblePageObjectFieldException.class)
     public void testThatVisibleAnnotationOnNonExistingPageObjectLeadsToException() {
-        Browser browser = getBrowser();
-        browser.getConfiguration().setWaitTimeout(1);
-        browser.open(getFormattedTestResourcePath("html/empty.html"), SingleVisiblePage.class);
+        getBrowser().create(InvisiblePage.class);
+        
     }
 
     @Test(expected = VisiblePageObjectListFieldException.class)
@@ -47,6 +44,12 @@ public class VisibleIntegrationTest extends AbstractWebTesterIntegrationTest {
         getBrowser().create(MultiVisiblePageWrongCount.class);
     }
 
+    @Test
+    public void testThatAnnotationOnContentsOfInvisibleContainerBoNotLeadToException(){
+       getBrowser().create(PageWithInvisibleContainer.class);
+        
+    }
+    
     public static class SingleVisiblePage extends PageObject {
 
         @Visible
@@ -54,7 +57,13 @@ public class VisibleIntegrationTest extends AbstractWebTesterIntegrationTest {
         TextField textfield;
 
     }
-
+    
+    public static class InvisiblePage extends PageObject{
+        @Visible
+        @IdentifyUsing(method = Method.ID , value="non:existing:field")
+        TextField invisibleTextField;
+    }
+    
     public static class MultiVisiblePage extends PageObject {
 
         @Visible(2)
@@ -69,6 +78,18 @@ public class VisibleIntegrationTest extends AbstractWebTesterIntegrationTest {
         @IdentifyUsing(method = Method.ID_STARTS_WITH, value = "multi:textfield")
         List<TextField> multipleTextFields;
 
+    }
+    
+    public static class InvisibleContainer extends PageObject{
+        @Visible
+        @IdentifyUsing("invisible:textfield")
+        TextField invisibleTextField;
+    }
+    
+    public static class PageWithInvisibleContainer extends PageObject{
+        
+        @IdentifyUsing("invisibleContainer")
+        InvisibleContainer invisibleContainer;
     }
 
 }

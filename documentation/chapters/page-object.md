@@ -168,6 +168,8 @@ invoked.
 If the annotated field is a `List` or `PageObjectList` the value property of the annotation must be used to declare how many
 elements of the list should be visible.
 
+@Visble can be also used for embedded containers. If an embedded container is not annotated then is contained page object that are annotated with @Visible will not be verified at creation time.
+
 **Note:** The given number is not the number of page objects expected to be in the list! It is the number of expected _visible_ page objects in the list!
 
 **Properties:**

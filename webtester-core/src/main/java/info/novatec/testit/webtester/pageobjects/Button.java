@@ -1,12 +1,9 @@
 package info.novatec.testit.webtester.pageobjects;
 
-import java.util.Set;
-
 import org.apache.commons.lang.StringUtils;
-import org.openqa.selenium.WebElement;
 
-import com.google.common.collect.Sets;
-
+import info.novatec.testit.webtester.api.annotations.Mapping;
+import info.novatec.testit.webtester.api.annotations.Mappings;
 import info.novatec.testit.webtester.api.exceptions.PageObjectIsDisabledException;
 import info.novatec.testit.webtester.api.exceptions.PageObjectIsInvisibleException;
 import info.novatec.testit.webtester.api.pageobjects.traits.HasLabel;
@@ -25,11 +22,9 @@ import info.novatec.testit.webtester.utils.Asserts;
  *
  * @since 0.9.0
  */
+@Mappings({ @Mapping(tag = "button"),
+    @Mapping(tag = "input", attribute = "type", values = { "submit", "reset", "button" }) })
 public class Button extends PageObject implements HasValue<String>, HasLabel {
-
-    private static final String BUTTON_TAG = "button";
-    private static final String INPUT_TAG = "input";
-    private static final Set<String> VALID_TYPES = Sets.newHashSet("reset", "submit", "button");
 
     /**
      * Retrieves the value of the {@link Button button}. If no value is set an
@@ -61,7 +56,7 @@ public class Button extends PageObject implements HasValue<String>, HasLabel {
     @Override
     public String getLabel() {
         // For buttons created with <input>, the value is shown as the label
-        if (INPUT_TAG.equalsIgnoreCase(getTagName())) {
+        if ("input".equalsIgnoreCase(getTagName())) {
             return getValue();
         }
         return StringUtils.defaultString(getVisibleText());
@@ -81,19 +76,6 @@ public class Button extends PageObject implements HasValue<String>, HasLabel {
         Asserts.assertEnabledAndVisible(this);
         super.click();
         return this;
-    }
-
-    @Override
-    protected boolean isCorrectClassForWebElement(WebElement webElement) {
-
-        String tagName = webElement.getTagName();
-        String type = StringUtils.defaultString(webElement.getAttribute("type")).toLowerCase();
-
-        if (INPUT_TAG.equalsIgnoreCase(tagName)) {
-            return VALID_TYPES.contains(type);
-        }
-
-        return BUTTON_TAG.equalsIgnoreCase(tagName);
     }
 
 }

@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 
 import info.novatec.testit.webtester.AbstractPageObjectTest;
+import info.novatec.testit.webtester.api.exceptions.WrongElementClassException;
 
 
 public class TextAreaTest extends AbstractPageObjectTest {
@@ -52,19 +53,13 @@ public class TextAreaTest extends AbstractPageObjectTest {
     @Test
     public void testCorrectnessOfClassForWebElement_textAreaTag() {
         stubWebElementTag("textarea");
-        assertThatCorrectnessOfClassIs(true);
+        cut.validate(webElement);
     }
 
-    @Test
+    @Test(expected = WrongElementClassException.class)
     public void testCorrectnessOfClassForWebElement_nonTextAreTag() {
         stubWebElementTag("other");
-        assertThatCorrectnessOfClassIs(false);
-    }
-
-    /* utilities */
-
-    private void assertThatCorrectnessOfClassIs(boolean expected) {
-        assertThat(cut.isCorrectClassForWebElement(webElement), is(expected));
+        cut.validate(webElement);
     }
 
 }

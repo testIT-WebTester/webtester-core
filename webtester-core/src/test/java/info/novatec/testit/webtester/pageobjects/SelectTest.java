@@ -25,6 +25,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 
 import info.novatec.testit.webtester.AbstractPageObjectTest;
+import info.novatec.testit.webtester.api.exceptions.WrongElementClassException;
 import info.novatec.testit.webtester.eventsystem.events.pageobject.SelectedByIndexEvent;
 import info.novatec.testit.webtester.eventsystem.events.pageobject.SelectedByTextEvent;
 import info.novatec.testit.webtester.eventsystem.events.pageobject.SelectedByValueEvent;
@@ -580,13 +581,13 @@ public class SelectTest extends AbstractPageObjectTest {
     @Test
     public void testCorrectnessOfClassForWebElement_selectTag() {
         stubWebElementTag("select");
-        assertThatCorrectnessOfClassIs(true);
+        cut.validate(webElement);
     }
 
-    @Test
+    @Test(expected = WrongElementClassException.class)
     public void testCorrectnessOfClassForWebElement_otherTag() {
         stubWebElementTag("other");
-        assertThatCorrectnessOfClassIs(false);
+        cut.validate(webElement);
     }
 
     /* utilities */
@@ -622,10 +623,6 @@ public class SelectTest extends AbstractPageObjectTest {
 
     private void selectHasOptions(WebElement... options) {
         doReturn(Arrays.asList(options)).when(select).getOptions();
-    }
-
-    private void assertThatCorrectnessOfClassIs(boolean expected) {
-        assertThat(cut.isCorrectClassForWebElement(webElement), is(expected));
     }
 
 }

@@ -1,6 +1,6 @@
 package info.novatec.testit.webtester.pageobjects;
 
-import org.openqa.selenium.WebElement;
+import info.novatec.testit.webtester.api.annotations.Mapping;
 
 
 /**
@@ -11,11 +11,7 @@ import org.openqa.selenium.WebElement;
  *
  * @since 0.9.9
  */
+@Mapping(tag = "form")
 public class Form extends PageObject {
-
-    @Override
-    protected boolean isCorrectClassForWebElement(WebElement webElement) {
-        return "form".equalsIgnoreCase(webElement.getTagName());
-    }
 
 }

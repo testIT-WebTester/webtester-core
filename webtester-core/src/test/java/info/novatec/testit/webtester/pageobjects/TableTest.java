@@ -16,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 
 import info.novatec.testit.webtester.AbstractPageObjectTest;
+import info.novatec.testit.webtester.api.exceptions.WrongElementClassException;
 
 
 public class TableTest extends AbstractPageObjectTest {
@@ -81,13 +82,13 @@ public class TableTest extends AbstractPageObjectTest {
     @Test
     public void testCorrectnessOfClassForWebElement_tableTag() {
         stubWebElementTag("table");
-        assertThatCorrectnessOfClassIs(true);
+        cut.validate(webElement);
     }
 
-    @Test
+    @Test(expected = WrongElementClassException.class)
     public void testCorrectnessOfClassForWebElement_otherTag() {
         stubWebElementTag("other");
-        assertThatCorrectnessOfClassIs(false);
+        cut.validate(webElement);
     }
 
     /* utilities */
@@ -95,10 +96,6 @@ public class TableTest extends AbstractPageObjectTest {
     private void addBothRows() {
         tableRows.add(row1);
         tableRows.add(row2);
-    }
-
-    private void assertThatCorrectnessOfClassIs(boolean expected) {
-        assertThat(cut.isCorrectClassForWebElement(webElement), is(expected));
     }
 
 }

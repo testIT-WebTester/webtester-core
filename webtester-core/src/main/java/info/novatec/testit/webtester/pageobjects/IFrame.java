@@ -1,8 +1,8 @@
 package info.novatec.testit.webtester.pageobjects;
 
 import org.apache.commons.lang.StringUtils;
-import org.openqa.selenium.WebElement;
 
+import info.novatec.testit.webtester.api.annotations.Mapping;
 import info.novatec.testit.webtester.api.pageobjects.traits.HasSourcePath;
 
 
@@ -14,6 +14,7 @@ import info.novatec.testit.webtester.api.pageobjects.traits.HasSourcePath;
  *
  * @since 0.9.0
  */
+@Mapping(tag = "iframe")
 public class IFrame extends PageObject implements HasSourcePath {
 
     /**
@@ -26,11 +27,6 @@ public class IFrame extends PageObject implements HasSourcePath {
     @Override
     public String getSourcePath() {
         return StringUtils.defaultString(getAttribute("src"));
-    }
-
-    @Override
-    protected boolean isCorrectClassForWebElement(WebElement webElement) {
-        return "iframe".equalsIgnoreCase(webElement.getTagName());
     }
 
 }

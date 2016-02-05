@@ -12,6 +12,7 @@ import org.mockito.InjectMocks;
 import info.novatec.testit.webtester.AbstractPageObjectTest;
 import info.novatec.testit.webtester.api.exceptions.PageObjectIsDisabledException;
 import info.novatec.testit.webtester.api.exceptions.PageObjectIsInvisibleException;
+import info.novatec.testit.webtester.api.exceptions.WrongElementClassException;
 
 
 public class ButtonTest extends AbstractPageObjectTest {
@@ -91,37 +92,37 @@ public class ButtonTest extends AbstractPageObjectTest {
     @Test
     public void testCorrectnessOfClassForWebElement_inputTag() {
         stubWebElementTag("button");
-        assertThatCorrectnessOfClassIs(true);
+        cut.validate(webElement);
     }
 
     @Test
     public void testCorrectnessOfClassForWebElement_inputTag_buttonType() {
         stubWebElementTagAndType("input", "button");
-        assertThatCorrectnessOfClassIs(true);
+        cut.validate(webElement);
     }
 
     @Test
     public void testCorrectnessOfClassForWebElement_inputTag_resetType() {
         stubWebElementTagAndType("input", "reset");
-        assertThatCorrectnessOfClassIs(true);
+        cut.validate(webElement);
     }
 
     @Test
     public void testCorrectnessOfClassForWebElement_inputTag_submitType() {
         stubWebElementTagAndType("input", "submit");
-        assertThatCorrectnessOfClassIs(true);
+        cut.validate(webElement);
     }
 
-    @Test
+    @Test(expected = WrongElementClassException.class)
     public void testCorrectnessOfClassForWebElement_nonInputTag() {
         stubWebElementTagAndType("other", null);
-        assertThatCorrectnessOfClassIs(false);
+        cut.validate(webElement);
     }
 
-    @Test
+    @Test(expected = WrongElementClassException.class)
     public void testCorrectnessOfClassForWebElement_inputTag_nonTextFieldType() {
         stubWebElementTagAndType("input", "other");
-        assertThatCorrectnessOfClassIs(false);
+        cut.validate(webElement);
     }
 
     /* utilities */

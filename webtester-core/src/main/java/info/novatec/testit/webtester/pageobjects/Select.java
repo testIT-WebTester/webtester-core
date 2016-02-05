@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import info.novatec.testit.webtester.api.annotations.Mapping;
 import info.novatec.testit.webtester.api.callbacks.PageObjectCallback;
 import info.novatec.testit.webtester.api.callbacks.PageObjectCallbackWithReturnValue;
 import info.novatec.testit.webtester.eventsystem.events.pageobject.SelectedByIndexEvent;
@@ -25,6 +26,7 @@ import info.novatec.testit.webtester.utils.Asserts;
  *
  * @since 0.9.0
  */
+@Mapping(tag = "select")
 public class Select extends PageObject {
 
     private static final Logger logger = LoggerFactory.getLogger(Select.class);
@@ -368,11 +370,6 @@ public class Select extends PageObject {
     public void invalidate() {
         select = null;
         super.invalidate();
-    }
-
-    @Override
-    protected boolean isCorrectClassForWebElement(WebElement webElement) {
-        return "select".equalsIgnoreCase(webElement.getTagName());
     }
 
     private org.openqa.selenium.support.ui.Select getSelect() {

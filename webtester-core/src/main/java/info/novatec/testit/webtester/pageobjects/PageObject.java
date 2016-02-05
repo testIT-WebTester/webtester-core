@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import info.novatec.testit.webtester.api.annotations.Mapping;
 import info.novatec.testit.webtester.api.browser.Browser;
 import info.novatec.testit.webtester.api.callbacks.PageObjectCallback;
 import info.novatec.testit.webtester.api.callbacks.PageObjectCallbackWithReturnValue;
@@ -19,6 +20,7 @@ import info.novatec.testit.webtester.api.pageobjects.PageObjectList;
 import info.novatec.testit.webtester.api.pageobjects.traits.Invalidateable;
 import info.novatec.testit.webtester.eventsystem.EventSystem;
 import info.novatec.testit.webtester.eventsystem.events.pageobject.ClickedEvent;
+import info.novatec.testit.webtester.internal.validation.MappingValidator;
 import info.novatec.testit.webtester.internal.annotations.SetViaInjection;
 import info.novatec.testit.webtester.internal.pageobjects.ActionTemplate;
 import info.novatec.testit.webtester.internal.pageobjects.PageObjectModel;
@@ -46,9 +48,11 @@ public class PageObject implements Invalidateable {
     private WebElement cachedWebElement;
 
 	private ActionTemplate actionTemplate;
+    private MappingValidator validator;
 
     protected PageObject() {
-		actionTemplate = new ActionTemplate(this);
+        this.actionTemplate = new ActionTemplate(this);
+        this.validator = new MappingValidator(getClass());
     }
 
     /**
@@ -65,19 +69,13 @@ public class PageObject implements Invalidateable {
      * @since 0.9.9
      */
     public WebElement getWebElement() {
-
         if (cachedWebElement != null) {
             return cachedWebElement;
         }
-
-        WebElement element = findWebElementByIdentification();
-        validateElementClass(element);
-        rememberWebElementIfCachingIsEnabled(element);
-        return element;
-
+        return optionallyCache(validate(findWebElement()));
     }
 
-    private WebElement findWebElementByIdentification() {
+    private WebElement findWebElement() {
         SearchContext searchContext = model.getSearchContext();
         return searchContext.findElement(model.getSeleniumBy());
     }
@@ -88,13 +86,19 @@ public class PageObject implements Invalidateable {
      * fails an {@link WrongElementClassException} is thrown.
      *
      * @param element the element to check
+     * @return the same web element instance in case the validation was successful
      * @throws WrongElementClassException if check fails
      * @since 0.9.9
      */
-    protected final void validateElementClass(WebElement element) {
-        if (!isCorrectClassForWebElement(element)) {
-            throw new WrongElementClassException(getClass());
+    protected final WebElement validate(WebElement element) {
+        if (validator.canValidate()) {
+            validator.assertValidity(element);
+        } else {
+            if (!isCorrectClassForWebElement(element)) {
+                throw new WrongElementClassException(getClass());
+            }
         }
+        return element;
     }
 
     /**
@@ -108,15 +112,18 @@ public class PageObject implements Invalidateable {
      * @return true if the {@linkplain WebElement} is a valid instance of this
      * specific {@linkplain PageObject} type, false otherwise
      * @since 0.9.0
+     * @deprecated will be removed with v1.3.0 - the annotation based {@link Mapping} approach should be used instead
      */
+    @Deprecated
     protected boolean isCorrectClassForWebElement(WebElement webElementToBeChecked) {
         return true;
     }
 
-    private void rememberWebElementIfCachingIsEnabled(WebElement webElement) {
+    private WebElement optionallyCache(WebElement webElement) {
         if (model.cachingIsEnabled()) {
             cachedWebElement = webElement;
         }
+        return webElement;
     }
 
     /**

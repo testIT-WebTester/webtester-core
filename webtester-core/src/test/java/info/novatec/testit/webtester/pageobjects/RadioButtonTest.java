@@ -11,6 +11,7 @@ import org.mockito.InjectMocks;
 import info.novatec.testit.webtester.AbstractPageObjectTest;
 import info.novatec.testit.webtester.api.exceptions.PageObjectIsDisabledException;
 import info.novatec.testit.webtester.api.exceptions.PageObjectIsInvisibleException;
+import info.novatec.testit.webtester.api.exceptions.WrongElementClassException;
 
 
 public class RadioButtonTest extends AbstractPageObjectTest {
@@ -56,25 +57,19 @@ public class RadioButtonTest extends AbstractPageObjectTest {
     @Test
     public void testCorrectnessOfClassForWebElement_inputTag_textType() {
         stubWebElementTagAndType("input", "radio");
-        assertThatCorrectnessOfClassIs(true);
+        cut.validate(webElement);
     }
 
-    @Test
+    @Test(expected = WrongElementClassException.class)
     public void testCorrectnessOfClassForWebElement_nonInputTag() {
         stubWebElementTagAndType("other", null);
-        assertThatCorrectnessOfClassIs(false);
+        cut.validate(webElement);
     }
 
-    @Test
+    @Test(expected = WrongElementClassException.class)
     public void testCorrectnessOfClassForWebElement_inputTag_nonTextFieldType() {
         stubWebElementTagAndType("input", "other");
-        assertThatCorrectnessOfClassIs(false);
-    }
-
-    /* utilities */
-
-    private void assertThatCorrectnessOfClassIs(boolean expected) {
-        assertThat(cut.isCorrectClassForWebElement(webElement), is(expected));
+        cut.validate(webElement);
     }
 
 }

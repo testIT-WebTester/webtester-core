@@ -12,6 +12,7 @@ import org.mockito.InOrder;
 import org.mockito.InjectMocks;
 
 import info.novatec.testit.webtester.AbstractPageObjectTest;
+import info.novatec.testit.webtester.api.exceptions.WrongElementClassException;
 import info.novatec.testit.webtester.eventsystem.events.pageobject.TextSetEvent;
 
 
@@ -71,29 +72,25 @@ public class NumberFieldTest extends AbstractPageObjectTest {
     @Test
     public void testCorrectnessOfClassForWebElement_inputTag_numberType() {
         stubWebElementTagAndType("input", "number");
-        assertThatCorrectnessOfClassIs(true);
+        cut.validate(webElement);
     }
 
-    @Test
+    @Test(expected = WrongElementClassException.class)
     public void testCorrectnessOfClassForWebElement_nonInputTag() {
         stubWebElementTagAndType("other", null);
-        assertThatCorrectnessOfClassIs(false);
+        cut.validate(webElement);
     }
 
-    @Test
+    @Test(expected = WrongElementClassException.class)
     public void testCorrectnessOfClassForWebElement_inputTag_nonNumberFieldType() {
         stubWebElementTagAndType("input", "other");
-        assertThatCorrectnessOfClassIs(false);
+        cut.validate(webElement);
     }
 
     /* utilities */
 
     private void stubNumberField(String value) {
         doReturn(value).when(webElement).getAttribute("value");
-    }
-
-    private void assertThatCorrectnessOfClassIs(boolean expected) {
-        assertThat(cut.isCorrectClassForWebElement(webElement), is(expected));
     }
 
 }

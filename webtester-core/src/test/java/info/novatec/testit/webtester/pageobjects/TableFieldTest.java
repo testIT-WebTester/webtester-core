@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 
 import info.novatec.testit.webtester.AbstractPageObjectTest;
+import info.novatec.testit.webtester.api.exceptions.WrongElementClassException;
 
 
 public class TableFieldTest extends AbstractPageObjectTest {
@@ -34,25 +35,19 @@ public class TableFieldTest extends AbstractPageObjectTest {
     @Test
     public void testCorrectnessOfClassForWebElement_thTag() {
         stubWebElementTag("th");
-        assertThatCorrectnessOfClassIs(true);
+        cut.validate(webElement);
     }
 
     @Test
     public void testCorrectnessOfClassForWebElement_tdTag() {
         stubWebElementTag("td");
-        assertThatCorrectnessOfClassIs(true);
+        cut.validate(webElement);
     }
 
-    @Test
+    @Test(expected = WrongElementClassException.class)
     public void testCorrectnessOfClassForWebElement_otherTag() {
         stubWebElementTag("other");
-        assertThatCorrectnessOfClassIs(false);
-    }
-
-    /* utilities */
-
-    private void assertThatCorrectnessOfClassIs(boolean expected) {
-        assertThat(cut.isCorrectClassForWebElement(webElement), is(expected));
+        cut.validate(webElement);
     }
 
 }

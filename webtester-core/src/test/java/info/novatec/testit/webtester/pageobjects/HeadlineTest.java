@@ -1,12 +1,10 @@
 package info.novatec.testit.webtester.pageobjects;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-
 import org.junit.Test;
 import org.mockito.InjectMocks;
 
 import info.novatec.testit.webtester.AbstractPageObjectTest;
+import info.novatec.testit.webtester.api.exceptions.WrongElementClassException;
 
 
 public class HeadlineTest extends AbstractPageObjectTest {
@@ -19,49 +17,43 @@ public class HeadlineTest extends AbstractPageObjectTest {
     @Test
     public void testCorrectnessOfClassForWebElement_h1Tag() {
         stubWebElementTag("h1");
-        assertThatCorrectnessOfClassIs(true);
+        cut.validate(webElement);
     }
 
     @Test
     public void testCorrectnessOfClassForWebElement_h2Tag() {
         stubWebElementTag("h2");
-        assertThatCorrectnessOfClassIs(true);
+        cut.validate(webElement);
     }
 
     @Test
     public void testCorrectnessOfClassForWebElement_h3Tag() {
         stubWebElementTag("h3");
-        assertThatCorrectnessOfClassIs(true);
+        cut.validate(webElement);
     }
 
     @Test
     public void testCorrectnessOfClassForWebElement_h4Tag() {
         stubWebElementTag("h4");
-        assertThatCorrectnessOfClassIs(true);
+        cut.validate(webElement);
     }
 
     @Test
     public void testCorrectnessOfClassForWebElement_h5Tag() {
         stubWebElementTag("h5");
-        assertThatCorrectnessOfClassIs(true);
+        cut.validate(webElement);
     }
 
     @Test
     public void testCorrectnessOfClassForWebElement_h6Tag() {
         stubWebElementTag("h6");
-        assertThatCorrectnessOfClassIs(true);
+        cut.validate(webElement);
     }
 
-    @Test
+    @Test(expected = WrongElementClassException.class)
     public void testCorrectnessOfClassForWebElement_otherTag() {
         stubWebElementTag("other");
-        assertThatCorrectnessOfClassIs(false);
-    }
-
-    /* utilities */
-
-    private void assertThatCorrectnessOfClassIs(boolean expected) {
-        assertThat(cut.isCorrectClassForWebElement(webElement), is(expected));
+        cut.validate(webElement);
     }
 
 }

@@ -12,6 +12,7 @@ import org.mockito.InjectMocks;
 import info.novatec.testit.webtester.AbstractPageObjectTest;
 import info.novatec.testit.webtester.api.exceptions.PageObjectIsDisabledException;
 import info.novatec.testit.webtester.api.exceptions.PageObjectIsInvisibleException;
+import info.novatec.testit.webtester.api.exceptions.WrongElementClassException;
 
 
 public class ImageTest extends AbstractPageObjectTest {
@@ -97,23 +98,19 @@ public class ImageTest extends AbstractPageObjectTest {
     @Test
     public void testCorrectnessOfClassForWebElement_imageTag() {
         stubWebElementTag("img");
-        assertThatCorrectnessOfClassIs(true);
+        cut.validate(webElement);
     }
 
-    @Test
+    @Test(expected = WrongElementClassException.class)
     public void testCorrectnessOfClassForWebElement_otherTag() {
         stubWebElementTag("other");
-        assertThatCorrectnessOfClassIs(false);
+        cut.validate(webElement);
     }
 
     /* utilities */
 
     private void stubImageSource(String src) {
         doReturn(src).when(webElement).getAttribute("src");
-    }
-
-    private void assertThatCorrectnessOfClassIs(boolean expected) {
-        assertThat(cut.isCorrectClassForWebElement(webElement), is(expected));
     }
 
 }

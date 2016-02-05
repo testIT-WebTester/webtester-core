@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 
 import info.novatec.testit.webtester.AbstractPageObjectTest;
+import info.novatec.testit.webtester.api.exceptions.WrongElementClassException;
 
 
 public class ListTest extends AbstractPageObjectTest {
@@ -75,19 +76,19 @@ public class ListTest extends AbstractPageObjectTest {
     @Test
     public void testCorrectnessOfClassForWebElement_orderedListTag() {
         stubWebElementTag("ol");
-        assertThatCorrectnessOfClassIs(true);
+        cut.validate(webElement);
     }
 
     @Test
     public void testCorrectnessOfClassForWebElement_unorderedListTag() {
         stubWebElementTag("ul");
-        assertThatCorrectnessOfClassIs(true);
+        cut.validate(webElement);
     }
 
-    @Test
+    @Test(expected = WrongElementClassException.class)
     public void testCorrectnessOfClassForWebElement_otherTag() {
         stubWebElementTag("other");
-        assertThatCorrectnessOfClassIs(false);
+        cut.validate(webElement);
     }
 
     /* utilities */
@@ -95,10 +96,6 @@ public class ListTest extends AbstractPageObjectTest {
     private void addBothItems() {
         listItems.add(listItem1);
         listItems.add(listItem2);
-    }
-
-    private void assertThatCorrectnessOfClassIs(boolean expected) {
-        assertThat(cut.isCorrectClassForWebElement(webElement), is(expected));
     }
 
 }

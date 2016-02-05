@@ -22,6 +22,7 @@ import org.openqa.selenium.Keys;
 import info.novatec.testit.webtester.AbstractPageObjectTest;
 import info.novatec.testit.webtester.api.exceptions.PageObjectIsDisabledException;
 import info.novatec.testit.webtester.api.exceptions.PageObjectIsInvisibleException;
+import info.novatec.testit.webtester.api.exceptions.WrongElementClassException;
 import info.novatec.testit.webtester.eventsystem.events.pageobject.TextAppendedEvent;
 import info.novatec.testit.webtester.eventsystem.events.pageobject.TextClearedEvent;
 import info.novatec.testit.webtester.eventsystem.events.pageobject.TextSetEvent;
@@ -219,41 +220,49 @@ public class TextFieldTest extends AbstractPageObjectTest {
     @Test
     public void testCorrectnessOfClassForWebElement_inputTag() {
         stubWebElementTagAndType("input", null);
-        assertThatCorrectnessOfClassIs(true);
+        cut.validate(webElement);
     }
 
     @Test
     public void testCorrectnessOfClassForWebElement_inputTag_emptyType() {
         stubWebElementTagAndType("input", "");
-        assertThatCorrectnessOfClassIs(true);
+        cut.validate(webElement);
     }
 
     @Test
     public void testCorrectnessOfClassForWebElement_inputTag_textType() {
         stubWebElementTagAndType("input", "text");
-        assertThatCorrectnessOfClassIs(true);
+        cut.validate(webElement);
     }
 
     @Test
+    public void testCorrectnessOfClassForWebElement_inputTag_passwordType() {
+        stubWebElementTagAndType("input", "password");
+        cut.validate(webElement);
+    }
+
+    @Test
+    public void testCorrectnessOfClassForWebElement_inputTag_numberType() {
+        stubWebElementTagAndType("input", "number");
+        cut.validate(webElement);
+    }
+
+    @Test(expected = WrongElementClassException.class)
     public void testCorrectnessOfClassForWebElement_nonInputTag() {
         stubWebElementTagAndType("other", null);
-        assertThatCorrectnessOfClassIs(false);
+        cut.validate(webElement);
     }
 
-    @Test
+    @Test(expected = WrongElementClassException.class)
     public void testCorrectnessOfClassForWebElement_inputTag_nonTextFieldType() {
         stubWebElementTagAndType("input", "other");
-        assertThatCorrectnessOfClassIs(false);
+        cut.validate(webElement);
     }
 
     /* utilities */
 
     private void stubWebElementBeforeAndAfterTexts(String before, String after) {
         when(webElement.getAttribute("value")).thenReturn(before, after);
-    }
-
-    private void assertThatCorrectnessOfClassIs(boolean expected) {
-        assertThat(cut.isCorrectClassForWebElement(webElement), is(expected));
     }
 
 }

@@ -1,11 +1,7 @@
 package info.novatec.testit.webtester.pageobjects;
 
-import java.util.Set;
-
-import org.apache.commons.lang.StringUtils;
-import org.openqa.selenium.WebElement;
-
-import com.google.common.collect.Sets;
+import info.novatec.testit.webtester.api.annotations.Mapping;
+import info.novatec.testit.webtester.api.annotations.Mappings;
 
 
 /**
@@ -21,15 +17,8 @@ import com.google.common.collect.Sets;
  *
  * @since 0.9.0
  */
+@Mappings({ @Mapping(tag = "h1"), @Mapping(tag = "h2"), @Mapping(tag = "h3"), @Mapping(tag = "h4"), @Mapping(tag = "h5"),
+    @Mapping(tag = "h6") })
 public class Headline extends PageObject {
-
-    private static final Set<String> VALID_TAGS = Sets.newHashSet("h1", "h2", "h3", "h4", "h5", "h6");
-
-    @Override
-    protected boolean isCorrectClassForWebElement(WebElement webElement) {
-        String tagName = webElement.getTagName();
-        String lowerCaseTagName = StringUtils.defaultString(tagName).toLowerCase();
-        return VALID_TAGS.contains(lowerCaseTagName);
-    }
 
 }

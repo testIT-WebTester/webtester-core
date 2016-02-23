@@ -3,9 +3,8 @@ package info.novatec.testit.webtester.pageobjects;
 import java.util.Collections;
 import java.util.List;
 
-import org.openqa.selenium.WebElement;
-
 import info.novatec.testit.webtester.api.annotations.IdentifyUsing;
+import info.novatec.testit.webtester.api.annotations.Mapping;
 import info.novatec.testit.webtester.api.callbacks.PageObjectCallbackWithReturnValue;
 import info.novatec.testit.webtester.api.enumerations.Method;
 
@@ -19,6 +18,7 @@ import info.novatec.testit.webtester.api.enumerations.Method;
  *
  * @since 0.9.0
  */
+@Mapping(tag = "tr")
 public class TableRow extends PageObject {
 
     @IdentifyUsing(method = Method.XPATH, value = "./th | ./td")
@@ -79,11 +79,6 @@ public class TableRow extends PageObject {
             }
 
         });
-    }
-
-    @Override
-    protected boolean isCorrectClassForWebElement(WebElement webElement) {
-        return "tr".equalsIgnoreCase(webElement.getTagName());
     }
 
 }

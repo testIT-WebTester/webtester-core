@@ -1,6 +1,6 @@
 package info.novatec.testit.webtester.pageobjects;
 
-import org.openqa.selenium.WebElement;
+import info.novatec.testit.webtester.api.annotations.Mapping;
 
 
 /**
@@ -11,6 +11,7 @@ import org.openqa.selenium.WebElement;
  *
  * @since 0.9.0
  */
+@Mapping(tag = "input", attribute = "type", values = { "password" })
 public class PasswordField extends TextField {
 
     @Override
@@ -32,19 +33,6 @@ public class PasswordField extends TextField {
         // Overridden for fluent API use
         super.appendText(textToAppend);
         return this;
-    }
-
-    @Override
-    protected boolean isCorrectClassForWebElement(WebElement webElement) {
-
-        String tagName = webElement.getTagName();
-        String type = webElement.getAttribute("type");
-
-        boolean isCorrectTag = "input".equalsIgnoreCase(tagName);
-        boolean isCorrectType = "password".equalsIgnoreCase(type);
-
-        return isCorrectTag && isCorrectType;
-
     }
 
 }

@@ -1,6 +1,6 @@
 package info.novatec.testit.webtester.pageobjects;
 
-import org.openqa.selenium.WebElement;
+import info.novatec.testit.webtester.api.annotations.Mapping;
 
 
 /**
@@ -11,6 +11,7 @@ import org.openqa.selenium.WebElement;
  *
  * @since 0.9.0
  */
+@Mapping(tag = "textarea")
 public class TextArea extends TextField {
 
     /**
@@ -64,11 +65,6 @@ public class TextArea extends TextField {
         // Overridden for fluent API use
         super.appendText(textToAppend);
         return this;
-    }
-
-    @Override
-    protected boolean isCorrectClassForWebElement(WebElement webElement) {
-        return "textarea".equalsIgnoreCase(webElement.getTagName());
     }
 
 }

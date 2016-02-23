@@ -1,12 +1,7 @@
 package info.novatec.testit.webtester.pageobjects;
 
-import java.util.Set;
-
-import org.apache.commons.lang.StringUtils;
-import org.openqa.selenium.WebElement;
-
-import com.google.common.collect.Sets;
-
+import info.novatec.testit.webtester.api.annotations.Mapping;
+import info.novatec.testit.webtester.api.annotations.Mappings;
 import info.novatec.testit.webtester.api.callbacks.PageObjectCallbackWithReturnValue;
 
 
@@ -20,9 +15,8 @@ import info.novatec.testit.webtester.api.callbacks.PageObjectCallbackWithReturnV
  *
  * @since 0.9.0
  */
+@Mappings({ @Mapping(tag = "th"), @Mapping(tag = "td") })
 public class TableField extends PageObject {
-
-    private static final Set<String> VALID_TAGS = Sets.newHashSet("th", "td");
 
     /**
      * Returns whether or not this {@link TableField field} is is a header field
@@ -40,13 +34,6 @@ public class TableField extends PageObject {
             }
 
         });
-    }
-
-    @Override
-    protected boolean isCorrectClassForWebElement(WebElement webElement) {
-        String tagName = StringUtils.defaultString(webElement.getTagName());
-        String lowerCasedTagName = tagName.toLowerCase();
-        return VALID_TAGS.contains(lowerCasedTagName);
     }
 
 }

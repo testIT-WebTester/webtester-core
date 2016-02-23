@@ -1,12 +1,10 @@
 package info.novatec.testit.webtester.pageobjects;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-
 import org.junit.Test;
 import org.mockito.InjectMocks;
 
 import info.novatec.testit.webtester.AbstractPageObjectTest;
+import info.novatec.testit.webtester.api.exceptions.WrongElementClassException;
 
 
 public class DivTest extends AbstractPageObjectTest {
@@ -17,19 +15,13 @@ public class DivTest extends AbstractPageObjectTest {
     @Test
     public void testCorrectnessOfClassForWebElement_divTag() {
         stubWebElementTag("div");
-        assertThatCorrectnessOfClassIs(true);
+        cut.validate(webElement);
     }
 
-    @Test
+    @Test(expected = WrongElementClassException.class)
     public void testCorrectnessOfClassForWebElement_otherTag() {
         stubWebElementTag("other");
-        assertThatCorrectnessOfClassIs(false);
-    }
-
-    /* utilities */
-
-    private void assertThatCorrectnessOfClassIs(boolean expected) {
-        assertThat(cut.isCorrectClassForWebElement(webElement), is(expected));
+        cut.validate(webElement);
     }
 
 }

@@ -1,15 +1,11 @@
 package info.novatec.testit.webtester.pageobjects;
 
-import java.util.Set;
-
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.collect.Sets;
-
+import info.novatec.testit.webtester.api.annotations.Mapping;
 import info.novatec.testit.webtester.api.callbacks.PageObjectCallback;
 import info.novatec.testit.webtester.api.exceptions.PageObjectIsDisabledException;
 import info.novatec.testit.webtester.api.exceptions.PageObjectIsInvisibleException;
@@ -37,6 +33,7 @@ import info.novatec.testit.webtester.utils.Asserts;
  *
  * @since 0.9.0
  */
+@Mapping(tag = "input", attribute = "type", values = { "", "text", "password", "number" })
 public class TextField extends PageObject implements HasText {
 
     private static final Logger logger = LoggerFactory.getLogger(TextField.class);
@@ -44,9 +41,6 @@ public class TextField extends PageObject implements HasText {
     private static final String CLEARED_TEXT = "changed text from '{}' to '{}' by clearing it";
     private static final String SET_TEXT = "changed text from '{}' to '{}' by trying to set it to '{}'";
     private static final String APPEND_TEXT = "changed text from '{}' to '{}' by trying to append '{}'";
-
-    private static final String INPUT_TAG = "input";
-    private static final Set<String> VALID_TYPES = Sets.newHashSet("", "text", "password", "number");
 
     /**
      * Retrieves the text value of this {@link TextField text field}. If no text
@@ -172,19 +166,6 @@ public class TextField extends PageObject implements HasText {
             }
 
         });
-    }
-
-    @Override
-    protected boolean isCorrectClassForWebElement(WebElement webElement) {
-
-        String tagName = webElement.getTagName();
-        String type = StringUtils.defaultString(webElement.getAttribute("type")).toLowerCase();
-
-        boolean isCorrectTag = INPUT_TAG.equalsIgnoreCase(tagName);
-        boolean isCorrectType = VALID_TYPES.contains(type);
-
-        return isCorrectTag && isCorrectType;
-
     }
 
     /**

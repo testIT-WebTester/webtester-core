@@ -1,14 +1,10 @@
 package info.novatec.testit.webtester.pageobjects;
 
 import java.util.Collections;
-import java.util.Set;
-
-import org.apache.commons.lang.StringUtils;
-import org.openqa.selenium.WebElement;
-
-import com.google.common.collect.Sets;
 
 import info.novatec.testit.webtester.api.annotations.IdentifyUsing;
+import info.novatec.testit.webtester.api.annotations.Mapping;
+import info.novatec.testit.webtester.api.annotations.Mappings;
 import info.novatec.testit.webtester.api.callbacks.PageObjectCallbackWithReturnValue;
 import info.novatec.testit.webtester.api.enumerations.Method;
 
@@ -22,9 +18,8 @@ import info.novatec.testit.webtester.api.enumerations.Method;
  *
  * @since 0.9.0
  */
+@Mappings({ @Mapping(tag = "ul"), @Mapping(tag = "ol") })
 public class List extends PageObject {
-
-    private static final Set<String> VALID_TAGS = Sets.newHashSet("ul", "ol");
 
     @IdentifyUsing(method = Method.XPATH, value = "./li")
     private java.util.List<ListItem> listItems;
@@ -79,13 +74,6 @@ public class List extends PageObject {
      */
     public Boolean isEmpty() {
         return listItems.isEmpty();
-    }
-
-    @Override
-    protected boolean isCorrectClassForWebElement(WebElement webElement) {
-        String tagName = StringUtils.defaultString(webElement.getTagName());
-        String lowerCasedTagName = tagName.toLowerCase();
-        return VALID_TAGS.contains(lowerCasedTagName);
     }
 
 }

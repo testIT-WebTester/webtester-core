@@ -17,7 +17,11 @@ import info.novatec.testit.webtester.pageobjects.TextField;
 public class WrongElementClassException extends WebTesterException {
 
     public WrongElementClassException(Class<?> expectedClass) {
-        super(String.format("element is not a %s!", expectedClass));
+        super(String.format("element is not a valid %s!", expectedClass));
+    }
+
+    public WrongElementClassException(String message) {
+        super(message);
     }
 
 }

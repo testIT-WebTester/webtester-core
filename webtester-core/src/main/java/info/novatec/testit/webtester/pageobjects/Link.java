@@ -1,7 +1,6 @@
 package info.novatec.testit.webtester.pageobjects;
 
-import org.openqa.selenium.WebElement;
-
+import info.novatec.testit.webtester.api.annotations.Mapping;
 import info.novatec.testit.webtester.api.exceptions.PageObjectIsDisabledException;
 import info.novatec.testit.webtester.api.exceptions.PageObjectIsInvisibleException;
 import info.novatec.testit.webtester.utils.Asserts;
@@ -15,6 +14,7 @@ import info.novatec.testit.webtester.utils.Asserts;
  *
  * @since 0.9.0
  */
+@Mapping(tag = "a")
 public class Link extends PageObject {
 
     /**
@@ -31,11 +31,6 @@ public class Link extends PageObject {
         Asserts.assertEnabledAndVisible(this);
         super.click();
         return this;
-    }
-
-    @Override
-    protected boolean isCorrectClassForWebElement(WebElement webElement) {
-        return "a".equalsIgnoreCase(webElement.getTagName());
     }
 
 }

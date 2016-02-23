@@ -18,6 +18,7 @@ import org.mockito.InjectMocks;
 import info.novatec.testit.webtester.AbstractPageObjectTest;
 import info.novatec.testit.webtester.api.exceptions.PageObjectIsDisabledException;
 import info.novatec.testit.webtester.api.exceptions.PageObjectIsInvisibleException;
+import info.novatec.testit.webtester.api.exceptions.WrongElementClassException;
 import info.novatec.testit.webtester.eventsystem.events.pageobject.SelectionChangedEvent;
 
 
@@ -161,19 +162,19 @@ public class CheckboxTest extends AbstractPageObjectTest {
     @Test
     public void testCorrectnessOfClassForWebElement_inputTag_textType() {
         stubWebElementTagAndType("input", "checkbox");
-        assertThatCorrectnessOfClassIs(true);
+        cut.validate(webElement);
     }
 
-    @Test
+    @Test(expected = WrongElementClassException.class)
     public void testCorrectnessOfClassForWebElement_nonInputTag() {
         stubWebElementTagAndType("other", null);
-        assertThatCorrectnessOfClassIs(false);
+        cut.validate(webElement);
     }
 
-    @Test
+    @Test(expected = WrongElementClassException.class)
     public void testCorrectnessOfClassForWebElement_inputTag_nonTextFieldType() {
         stubWebElementTagAndType("input", "other");
-        assertThatCorrectnessOfClassIs(false);
+        cut.validate(webElement);
     }
 
     /* utilities */
@@ -188,10 +189,6 @@ public class CheckboxTest extends AbstractPageObjectTest {
 
     private void stubWebElementBeforeAndAfterSelectionState(boolean before, boolean after) {
         when(webElement.isSelected()).thenReturn(before, after);
-    }
-
-    private void assertThatCorrectnessOfClassIs(boolean expected) {
-        assertThat(cut.isCorrectClassForWebElement(webElement), is(expected));
     }
 
 }

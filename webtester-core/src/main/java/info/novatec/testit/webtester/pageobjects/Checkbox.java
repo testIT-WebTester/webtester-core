@@ -1,9 +1,9 @@
 package info.novatec.testit.webtester.pageobjects;
 
-import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import info.novatec.testit.webtester.api.annotations.Mapping;
 import info.novatec.testit.webtester.api.callbacks.PageObjectCallback;
 import info.novatec.testit.webtester.api.callbacks.PageObjectCallbackWithReturnValue;
 import info.novatec.testit.webtester.api.exceptions.PageObjectIsDisabledException;
@@ -21,6 +21,7 @@ import info.novatec.testit.webtester.utils.Asserts;
  *
  * @since 0.9.0
  */
+@Mapping(tag = "input", attribute = "type", values = "checkbox")
 public class Checkbox extends PageObject implements Selectable {
 
     private static final Logger logger = LoggerFactory.getLogger(Checkbox.class);
@@ -94,19 +95,6 @@ public class Checkbox extends PageObject implements Selectable {
         Asserts.assertEnabledAndVisible(this);
         super.click();
         return this;
-    }
-
-    @Override
-    protected boolean isCorrectClassForWebElement(WebElement webElement) {
-
-        String tagName = webElement.getTagName();
-        String type = webElement.getAttribute("type");
-
-        boolean isCorrectTag = "input".equalsIgnoreCase(tagName);
-        boolean isCorrectType = "checkbox".equalsIgnoreCase(type);
-
-        return isCorrectTag && isCorrectType;
-
     }
 
 }

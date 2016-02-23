@@ -1,8 +1,8 @@
 package info.novatec.testit.webtester.pageobjects;
 
 import org.apache.commons.lang.StringUtils;
-import org.openqa.selenium.WebElement;
 
+import info.novatec.testit.webtester.api.annotations.Mapping;
 import info.novatec.testit.webtester.api.exceptions.PageObjectIsDisabledException;
 import info.novatec.testit.webtester.api.exceptions.PageObjectIsInvisibleException;
 import info.novatec.testit.webtester.api.pageobjects.traits.HasValue;
@@ -16,6 +16,7 @@ import info.novatec.testit.webtester.api.pageobjects.traits.HasValue;
  *
  * @since 0.9.3
  */
+@Mapping(tag = "input", attribute = "type", values = "number")
 public class NumberField extends TextField implements HasValue<Long> {
 
     /**
@@ -68,19 +69,6 @@ public class NumberField extends TextField implements HasValue<Long> {
         // Overridden for fluent API use
         super.appendText(textToAppend);
         return this;
-    }
-
-    @Override
-    protected boolean isCorrectClassForWebElement(WebElement webElement) {
-
-        String tagName = webElement.getTagName();
-        String type = webElement.getAttribute("type");
-
-        boolean isCorrectTag = "input".equalsIgnoreCase(tagName);
-        boolean isCorrectType = "number".equalsIgnoreCase(type);
-
-        return isCorrectTag && isCorrectType;
-
     }
 
 }

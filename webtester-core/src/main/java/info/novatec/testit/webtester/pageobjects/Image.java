@@ -3,8 +3,8 @@ package info.novatec.testit.webtester.pageobjects;
 import java.io.File;
 
 import org.apache.commons.lang.StringUtils;
-import org.openqa.selenium.WebElement;
 
+import info.novatec.testit.webtester.api.annotations.Mapping;
 import info.novatec.testit.webtester.api.callbacks.PageObjectCallbackWithReturnValue;
 import info.novatec.testit.webtester.api.exceptions.PageObjectIsDisabledException;
 import info.novatec.testit.webtester.api.exceptions.PageObjectIsInvisibleException;
@@ -21,6 +21,7 @@ import info.novatec.testit.webtester.utils.Asserts;
  *
  * @since 0.9.0
  */
+@Mapping(tag = "img")
 public class Image extends PageObject implements HasSourcePath, HasFileName {
 
     /**
@@ -74,11 +75,6 @@ public class Image extends PageObject implements HasSourcePath, HasFileName {
         Asserts.assertEnabledAndVisible(this);
         super.click();
         return this;
-    }
-
-    @Override
-    protected boolean isCorrectClassForWebElement(WebElement webElement) {
-        return "img".equalsIgnoreCase(webElement.getTagName());
     }
 
 }

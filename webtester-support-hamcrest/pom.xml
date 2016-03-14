@@ -14,10 +14,6 @@
 	<artifactId>webtester-support-hamcrest</artifactId>
 	<name>testIT | WebTester - Support - Hamcrest</name>
 
-	<properties>
-		<project.root>..</project.root>
-	</properties>
-
 	<dependencies>
 
 		<dependency>

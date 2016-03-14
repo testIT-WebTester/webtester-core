@@ -15,7 +15,6 @@
 	<name>testIT | WebTester - Support - AssertJ</name>
 
 	<properties>
-		<project.root>..</project.root>
 		<version.asserj>1.7.1</version.asserj>
 	</properties>
 

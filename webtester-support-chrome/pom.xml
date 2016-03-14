@@ -13,10 +13,6 @@
 	<artifactId>webtester-support-chrome</artifactId>
 	<name>testIT | WebTester - Support - Chrome</name>
 
-	<properties>
-		<project.root>..</project.root>
-	</properties>
-
 	<dependencies>
 
 		<dependency>

@@ -38,6 +38,8 @@
 
 	<modules>
 
+		<module>webtester-build-tools</module>
+
 		<module>webtester-core</module>
 
 		<module>webtester-support-assertj</module>
@@ -52,14 +54,10 @@
 
 	<properties>
 
-		<java.version>1.7</java.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<project.root>.</project.root>
-		<rules.pmd>${project.root}/development/pmd_rules.xml</rules.pmd>
-		<rules.checkstyle>${project.root}/development/checkstyle_rules.xml</rules.checkstyle>
-		<licenses.mapping>${project.root}/licensing/license-mappings.xml</licenses.mapping>
-		<licenses.template>${project.root}/licensing/NOTICE.template</licenses.template>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<!-- dependency versions -->
 
@@ -301,8 +299,6 @@
 									<requireNoRepositories />
 									<!-- no-distribution-management-in-poms -->
 									<banDistributionManagement />
-									<!-- multi-module-build-follows-best-practices -->
-									<reactorModuleConvergence />
 								</rules>
 							</configuration>
 						</execution>
@@ -339,10 +335,6 @@
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>${version.maven.compiler.plugin}</version>
 					<configuration>
-						<source>${java.version}</source>
-						<target>${java.version}</target>
-						<compilerVersion>${java.version}</compilerVersion>
-						<encoding>${project.build.sourceEncoding}</encoding>
 						<showWarnings>true</showWarnings>
 						<showDeprecation>true</showDeprecation>
 					</configuration>
@@ -445,14 +437,19 @@
 							</goals>
 						</execution>
 					</executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>info.novatec.testit</groupId>
+                            <artifactId>webtester-build-tools</artifactId>
+                            <version>${project.version}</version>
+                        </dependency>
+                    </dependencies>
 					<configuration>
 						<rulesets>
-							<ruleset>${rules.pmd}</ruleset>
+                            <ruleset>pmd_rules.xml</ruleset>
 						</rulesets>
 						<aggregate>true</aggregate>
 						<minimumTokens>100</minimumTokens>
-						<sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
-						<targetJdk>${java.version}</targetJdk>
 						<failOnViolation>true</failOnViolation>
 						<failurePriority>5</failurePriority>
 						<minimumPriority>5</minimumPriority>
@@ -471,20 +468,24 @@
 							</goals>
 						</execution>
 					</executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>info.novatec.testit</groupId>
+                            <artifactId>webtester-build-tools</artifactId>
+                            <version>${project.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>com.puppycrawl.tools</groupId>
+                            <artifactId>checkstyle</artifactId>
+                            <version>${version.checkstyle}</version>
+                        </dependency>
+                    </dependencies>
 					<configuration>
-						<configLocation>${rules.checkstyle}</configLocation>
-						<encoding>${project.reporting.outputEncoding}</encoding>
+                        <configLocation>checkstyle_rules.xml</configLocation>
 						<consoleOutput>true</consoleOutput>
 						<failsOnError>true</failsOnError>
 						<failOnViolation>true</failOnViolation>
 					</configuration>
-					<dependencies>
-						<dependency>
-							<groupId>com.puppycrawl.tools</groupId>
-							<artifactId>checkstyle</artifactId>
-							<version>${version.checkstyle}</version>
-						</dependency>
-					</dependencies>
 				</plugin>
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
@@ -551,6 +552,7 @@
 						<autoReleaseAfterClose>false</autoReleaseAfterClose>
 					</configuration>
 				</plugin>
+
 				<!-- other plugins -->
 
 				<plugin>
@@ -574,7 +576,7 @@
 					<version>${version.maven.deploy.plugin}</version>
 				</plugin>
 
-				<plugin>
+                <plugin>
 					<groupId>org.jasig.maven</groupId>
 					<artifactId>maven-notice-plugin</artifactId>
 					<version>${version.maven.notice.plugin}</version>
@@ -587,14 +589,21 @@
 								<goal>generate</goal>
 							</goals>
 							<configuration>
-								<noticeTemplate>${licenses.template}</noticeTemplate>
+								<noticeTemplate>licensing/NOTICE.template</noticeTemplate>
 								<licenseMapping>
-									<param>${licenses.mapping}</param>
+									<param>licensing/license-mappings.xml</param>
 								</licenseMapping>
 								<outputDir>${project.build.directory}/generated-sources/license</outputDir>
 							</configuration>
 						</execution>
 					</executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>info.novatec.testit</groupId>
+                            <artifactId>webtester-build-tools</artifactId>
+                            <version>${project.version}</version>
+                        </dependency>
+                    </dependencies>
 				</plugin>
 
 				<plugin>

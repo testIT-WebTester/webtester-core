@@ -13,10 +13,6 @@
 	<artifactId>webtester-core</artifactId>
 	<name>testIT | WebTester - Core</name>
 
-	<properties>
-		<project.root>..</project.root>
-	</properties>
-
 	<dependencies>
 
 		<!-- compile -->

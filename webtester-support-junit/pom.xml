@@ -13,10 +13,6 @@
 	<artifactId>webtester-support-junit</artifactId>
 	<name>testIT | WebTester - Support - JUnit</name>
 
-	<properties>
-		<project.root>..</project.root>
-	</properties>
-
 	<dependencies>
 
 		<dependency>

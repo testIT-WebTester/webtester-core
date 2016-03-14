@@ -13,10 +13,6 @@
 	<artifactId>webtester-support-firefox</artifactId>
 	<name>testIT | WebTester - Support - Firefox</name>
 
-	<properties>
-		<project.root>..</project.root>
-	</properties>
-
 	<dependencies>
 
 		<dependency>

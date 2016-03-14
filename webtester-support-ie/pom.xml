@@ -13,10 +13,6 @@
 	<artifactId>webtester-support-ie</artifactId>
 	<name>testIT | WebTester - Support - Internet Explorer</name>
 
-	<properties>
-		<project.root>..</project.root>
-	</properties>
-
 	<dependencies>
 
 		<dependency>

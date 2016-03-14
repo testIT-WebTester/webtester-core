@@ -14,7 +14,6 @@
 	<name>testIT | WebTester - Support - Spring 4</name>
 
 	<properties>
-		<project.root>..</project.root>
 		<version.spring>4.2.0.RELEASE</version.spring>
 		<version.spring.boot>1.2.5.RELEASE</version.spring.boot>
 	</properties>

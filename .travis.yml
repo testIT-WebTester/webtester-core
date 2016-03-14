@@ -10,10 +10,3 @@ before_script:
 script:
   - mvn clean
   - mvn verify -P code-quality,documentation,release
-notifications:
-  webhooks:
-    urls:
-      - https://webhooks.gitter.im/e/da3ad26b48e0855e3305
-    on_success: always  # options: [always|never|change] default: always
-    on_failure: always  # options: [always|never|change] default: always
-    on_start: never     # options: [always|never|change] default: always

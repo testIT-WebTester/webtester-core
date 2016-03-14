@@ -2,6 +2,10 @@
 
 # Getting Started with WebTester
 
+**Notice:** For more Examples take a look at:
+[WebTester's Examples Application]
+(https://github.com/testIT-WebTester/webtester-examples/tree/master/webtester-example-app/src/test/java)
+
 ## What you'll create
 You'll write a simple GUI test for [Twitter](https://twitter.com/) using WebTester that tests basic login
 as well as tweeting a simple message. The end result will be similar to this:
@@ -30,15 +34,24 @@ Configure the Maven project to look like this and replace `${webtester-version}`
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
  
-    <groupId>info.novatec.testit</groupId>
-    <artifactId>webtester-example-twitter</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <groupId>com.examples</groupId>
+    <artifactId>twitter-tests</artifactId>
+    <version>0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
  
-    <name>webtester-example-twitter</name>
-    <url>https://documentation.novatec-gmbh.de/display/TESTIT</url>
+    <properties>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
  
     <dependencies>
+        <dependency>
+            <groupId>info.novatec.testit</groupId>
+            <artifactId>webtester-core</artifactId>
+            <version>${webtester-version}</version>
+        </dependency>
         <dependency>
             <groupId>info.novatec.testit</groupId>
             <artifactId>webtester-support-firefox</artifactId>
@@ -60,33 +73,7 @@ Configure the Maven project to look like this and replace `${webtester-version}`
             <version>1.1.3</version>
         </dependency>
     </dependencies>
- 
-    <repositories>
-        <repository>
-            <id>novatec</id>
-            <name>NovaTec Public Repository</name>
-            <url>http://repository.novatec-gmbh.de/content/repositories/novatec/</url>
-        </repository>
-    </repositories>
- 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
-                <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
-                    <compilerVersion>1.7</compilerVersion>
-                    <encoding>UTF8</encoding>
-                    <showWarnings>true</showWarnings>
-                    <showDeprecation>true</showDeprecation>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
- 
+
 </project>
 ```
 
@@ -249,7 +236,11 @@ public class TweetBox extends PageObject {
 
 ## Create the Test
 
-The `TwitterTest` must `@RunWith` the `WebTesterJUnitRunner` class for JUnit support.
+The `TwitterTest` makes use of JUnit's `@RunWith` annotation with the `WebTesterJUnitRunner` class for automated resource 
+management.
+
+**In case your tests are already using another JUnit Runner, you'll have to initialize your ```Browser``` 
+instances manually. See the [Browser](browser.md) documentation for details!**
 
 In this example the `@CreateUsing` annotation specifies the `Browser` to be an instance of Firefox.
 

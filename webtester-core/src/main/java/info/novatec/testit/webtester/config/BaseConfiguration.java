@@ -155,13 +155,13 @@ public class BaseConfiguration implements Configuration {
     }
 
     @Override
-    public boolean browserShouldCloseAutomatically() {
-        return getBooleanProperty(key(NamedProperties.BROWSER_SHOULD_AUTOCLOSE), Boolean.FALSE);
+    public boolean cleanupLeftoverBrowsers() {
+        return getBooleanProperty(key(NamedProperties.CLEANUP_LEFTOVER_BROWSERS), Boolean.FALSE);
     }
 
     @Override
-    public BaseConfiguration setBrowserShouldCloseAutomatically(boolean browserShouldCloseAutomatically) {
-        return setProperty(key(NamedProperties.BROWSER_SHOULD_AUTOCLOSE), browserShouldCloseAutomatically);
+    public BaseConfiguration setCleanupLeftoverBrowsers(boolean enabled) {
+        return setProperty(key(NamedProperties.CLEANUP_LEFTOVER_BROWSERS), enabled);
     }
 
     @Override

@@ -80,7 +80,7 @@ public class WebDriverBrowserBuilder implements BrowserBuilder {
     }
 
     private void addShutdownHook(final WebDriverBrowser browser) {
-        if (browser.getConfiguration().browserShouldCloseAutomatically()) {
+        if (browser.getConfiguration().cleanupLeftoverBrowsers()) {
             Runtime.getRuntime().addShutdownHook(new Thread() {
 
                 @Override

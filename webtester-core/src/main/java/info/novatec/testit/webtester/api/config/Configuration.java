@@ -247,7 +247,7 @@ public interface Configuration {
      * @return true if browser should be closed automatically, otherwise false
      * @since 0.9.7
      */
-    boolean browserShouldCloseAutomatically();
+    boolean cleanupLeftoverBrowsers();
 
     /**
      * Sets whether or not created browsers should tried to be closed when the
@@ -260,7 +260,7 @@ public interface Configuration {
      * @return the same configuration for fluent API
      * @since 0.9.7
      */
-    Configuration setBrowserShouldCloseAutomatically(boolean browserShouldCloseAutomatically);
+    Configuration setCleanupLeftoverBrowsers(boolean browserShouldCloseAutomatically);
 
     /**
      * Returns whether or not the {@link PageObject page object's}

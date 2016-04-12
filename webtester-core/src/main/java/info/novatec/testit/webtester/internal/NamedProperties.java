@@ -16,10 +16,12 @@ public enum NamedProperties {
     @TypeDefinition(Constants.RESOURCE_URL)
     BROWSER_DEFAULT_ENTRY_POINT("browser.defaultEntryPoint"),
 
-    @Documentation("Whether or not open browsers should be closed automatically when the JVM is shut down.")
+    @Documentation("Whether or not leftover browsers should be closed automatically when the JVM is shut down."
+        + "\nSetting this property will have no impact on the browser's close method or other mechanisms for closing"
+        + " the browser either automatically or manually (i.e. JUnitRunner extension)")
     @TypeDefinition(Constants.BOOLEAN)
     @DefaultValue("false")
-    BROWSER_SHOULD_AUTOCLOSE("browser.autoClose"),
+    CLEANUP_LEFTOVER_BROWSERS("cleanup.closeLeftoverBrowsers"),
 
     @Documentation("Format pattern for timestamps to be used when printing timestamps.")
     @TypeDefinition(Constants.SIMPLE_DATE_FORMAT)

@@ -83,10 +83,11 @@ The values are the same as the fallback values of the `BaseConfiguration` implem
 # URL of the default entry point for the application under test.
 # TYPE: String [Resource URL]
 # browser.defaultEntryPoint =
- 
-# Weather or not open browsers should be closed automatically when the JVM is shut down.
+
+# Whether or not leftover browsers should be closed automatically when the JVM is shut down.
+# Setting this property will have no impact on the browser's close method or other mechanisms for closing the browser either automatically or manually (i.e. JUnitRunner extension)
 # TYPE: boolean [true, false]
-browser.autoClose = false
+cleanup.closeLeftoverBrowsers = false
  
 # Format pattern for timestamps to be used when printing timestamps.
 # TYPE: String [Java SimpleDateFormat style as described here: https://docs.oracle.com/javase/6/docs/api/java/text/SimpleDateFormat.html]

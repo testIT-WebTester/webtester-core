@@ -39,6 +39,7 @@
 			<!-- Selenium dependency used to have access to the Selenium API. -->
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-support</artifactId>
+			<scope>provided</scope>
 		</dependency>
 
 		<!-- test -->

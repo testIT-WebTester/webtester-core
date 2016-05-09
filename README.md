@@ -5,6 +5,8 @@
 
 ![testIT WebTester](documentation/images/logo-650x157.png)
 
+> This is the Java 6/7 optimized version of WebTester (v1.x), for the Java 8 version see [2.x](https://github.com/testIT-WebTester/webtester2-core).
+
 testIT WebTester is a web-application UI test automation framework based on Selenium (http://www.seleniumhq.org).
 
 It is the product of years of consulting experience in various projects and aims at providing a very intuitive, declarative and extendable API for writing programmatic UI tests in Java.

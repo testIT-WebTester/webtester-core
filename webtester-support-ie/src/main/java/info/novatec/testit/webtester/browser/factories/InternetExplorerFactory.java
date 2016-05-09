@@ -45,6 +45,7 @@ public class InternetExplorerFactory implements BrowserFactory {
     public Browser createBrowser() {
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability(CapabilityType.HAS_NATIVE_EVENTS, false);
         setOptionalProxyConfiguration(capabilities);
 
         return createBrowser(capabilities);

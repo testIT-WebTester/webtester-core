@@ -28,22 +28,27 @@
 			<artifactId>webtester-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-
 		<dependency>
-			<!-- Optional dependency on spring-core. Projects using this module should 
+			<!-- Selenium dependency used to have access to the Selenium API. -->
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-support</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<!-- Provided dependency on spring-core. Projects using this module should
 				provide their own version of the spring-core dependency and not be forced 
 				to inherit this one! -->
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
-			<optional>true</optional>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<!-- Optional dependency on spring-context. Projects using this module 
+			<!-- Provided dependency on spring-context. Projects using this module
 				should provide their own version of the spring-context dependency and not 
 				be forced to inherit this one! -->
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<optional>true</optional>
+			<scope>provided</scope>
 		</dependency>
 
 		<!-- The following dependencies are only used by tests of this module and 

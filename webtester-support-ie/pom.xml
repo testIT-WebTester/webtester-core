@@ -23,14 +23,20 @@
 			<artifactId>webtester-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-
 		<dependency>
-			<!-- Required dependency on selenium-ie-driver used to interact with an 
+			<!-- Selenium dependency used to have access to the Selenium API. -->
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-support</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<!-- Provided dependency on selenium-ie-driver used to interact with an
 				Internet Explorer browser. The dependency should be inherited by projects 
 				using this module. If another version of this dependency is needed / wanted 
 				it should be overridden by the project. -->
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-ie-driver</artifactId>
+			<scope>provided</scope>
 		</dependency>
 
 	</dependencies>

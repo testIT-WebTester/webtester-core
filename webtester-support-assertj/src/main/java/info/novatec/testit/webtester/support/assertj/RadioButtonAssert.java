@@ -17,11 +17,10 @@ public class RadioButtonAssert extends AbstractPageObjectAssert<RadioButtonAsser
     /**
      * Asserts that the {@link RadioButton radio button} is selected.
      *
-     * @param selected the radio button's expected selected status
      * @return same assertion instance for fluent API
      * @since 0.9.8
      */
-    public RadioButtonAssert isSelected(boolean selected) {
+    public RadioButtonAssert isSelected() {
         failOnActualBeingNull();
         if (!actual.isSelected()) {
             failWithMessage("Expected radiobutton to be selected, but is wasn't.");
@@ -32,11 +31,10 @@ public class RadioButtonAssert extends AbstractPageObjectAssert<RadioButtonAsser
     /**
      * Asserts that the {@link RadioButton radio button} isn't selected.
      *
-     * @param selected not the radio button's expected selected status
      * @return same assertion instance for fluent API
      * @since 0.9.8
      */
-    public RadioButtonAssert isNotSelected(boolean selected) {
+    public RadioButtonAssert isNotSelected() {
         failOnActualBeingNull();
         if (actual.isSelected()) {
             failWithMessage("Expected radiobutton not to be selected, but it was.");

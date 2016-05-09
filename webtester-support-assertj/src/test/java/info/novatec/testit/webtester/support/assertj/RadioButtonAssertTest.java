@@ -29,22 +29,22 @@ public class RadioButtonAssertTest {
 
     @Test
     public void selectedTrueTest() {
-        assertThat(selectedRadioButton).isSelected(true);
+        assertThat(selectedRadioButton).isSelected();
     }
 
     @Test(expected = AssertionError.class)
     public void selectedFalseTest() {
-        assertThat(radioButton).isSelected(true);
+        assertThat(radioButton).isSelected();
     }
 
     @Test
     public void notSelectedTrueTest() {
-        assertThat(radioButton).isNotSelected(true);
+        assertThat(radioButton).isNotSelected();
     }
 
     @Test(expected = AssertionError.class)
     public void notSelectedFalseTest() {
-        assertThat(selectedRadioButton).isNotSelected(true);
+        assertThat(selectedRadioButton).isNotSelected();
     }
 
 }

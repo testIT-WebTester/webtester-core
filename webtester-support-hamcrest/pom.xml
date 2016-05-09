@@ -25,12 +25,18 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<!-- Optional dependency on hamcrest-all. Projects using this module should 
+			<!-- Selenium dependency used to have access to the Selenium API. -->
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-support</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<!-- Provided dependency on hamcrest-all. Projects using this module should
 				provide their own version of the hamcrest dependency and not be forced 
 				to inherit this one! -->
 			<groupId>org.hamcrest</groupId>
 			<artifactId>hamcrest-all</artifactId>
-			<optional>true</optional>
+			<scope>provided</scope>
 		</dependency>
 
 	</dependencies>

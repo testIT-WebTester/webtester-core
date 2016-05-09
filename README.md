@@ -1,5 +1,4 @@
 [![License](https://img.shields.io/badge/License-Apache%20License%202.0-brightgreen.svg)](http://www.apache.org/licenses/LICENSE-2.0.txt)
-[![Gitter](https://img.shields.io/badge/Gitter-join%20chat-brightgreen.svg)](https://gitter.im/testIT-WebTester/webtester-core)
 [![Build Status](https://travis-ci.org/testIT-WebTester/webtester-core.svg?branch=master)](https://travis-ci.org/testIT-WebTester/webtester-core)
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/49127ec017e2458cbf43c2d9aeb97579)](https://www.codacy.com/app/slu-it/webtester-core)
 [![Issue Count](https://codeclimate.com/github/testIT-WebTester/webtester-core/badges/issue_count.svg)](https://codeclimate.com/github/testIT-WebTester/webtester-core)
@@ -19,12 +18,14 @@ It is the product of years of consulting experience in various projects and aims
 - Support modules for the integration with frameworks like: assertj, hamcrest, junit, spring
 - If you must, Selenium is always just a method call away.
 
+### Other Versions
+This repository contains the Java 6/7 branch of WebTester. For the Java 8 version of WebTester take a look [here](https://github.com/testIT-WebTester/webtester2-core).
+
 ### Get in touch
-You can contact us using [Gitter](https://gitter.im/testIT-WebTester/webtester-core) or create an [issue](https://github.com/testIT-WebTester/webtester-core/issues).
+You can contact us via [e-mail](mailto:webtester@novatec-gmbh.de) or create an [issue](https://github.com/testIT-WebTester/webtester-core/issues).
 
 ### Documentation
-The [user documentation](documentation/README.md) is part of the repository and provides in-depth documentation on all the features.
-If you have further questions please get in touch with us.
+The [user documentation](documentation/README.md) is part of the repository and provides in-depth documentation on all the features. If you have further questions please get in touch with us.
 
 ### Contribute
 If you want to contribute to WebTester, fork the repository, make your additions and changes and create a pull request.

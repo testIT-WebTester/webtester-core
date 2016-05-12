@@ -260,6 +260,25 @@ public class PageObject implements Invalidateable {
     }
 
     /**
+     * Sets the value of an attribute of this {@link PageObject} using JavaScript.
+     * <p>
+     * <b>Example:</b>
+     * <pre>
+     * // will change the value of a text field to 'foo'
+     * textField.setAttribute("value", "foo");
+     * </pre>
+     *
+     * @param attributeName the name of the attribute to set
+     * @param value the value to set the attribute to
+     * @since 1.2.0
+     */
+    public void setAttribute(String attributeName, String value) {
+        String escapedValue = StringUtils.replace(value, "\"", "\\\"");
+        String script = "arguments[0]." + attributeName + " = \"" + escapedValue + "\"";
+        getBrowser().executeJavaScript(script, this, value);
+    }
+
+    /**
      * @param attributeName the name of the attribute for which the value should
      * be returned
      * @return the value of the given attribute, or null if the attribute is not

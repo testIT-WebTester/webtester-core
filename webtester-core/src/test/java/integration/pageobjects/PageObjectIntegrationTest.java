@@ -136,6 +136,22 @@ public class PageObjectIntegrationTest extends AbstractWebTesterIntegrationTest 
         assertThat(element.getAttribute(UNKNOWN), is(nullValue()));
     }
 
+    /* setting attribute */
+
+    @Test
+    public void setAttribute() {
+        TextField textField = getBrowser().create(TestPage.class).forSetAttribute;
+        textField.setAttribute("value", "hello world!");
+        assertThat(textField.getText(), is(equalTo("hello world!")));
+    }
+
+    @Test
+    public void setAttributeWithCharactersThatNeedEscaping() {
+        TextField textField = getBrowser().create(TestPage.class).forSetAttribute;
+        textField.setAttribute("value", "hello \"world!\"");
+        assertThat(textField.getText(), is(equalTo("hello \"world!\"")));
+    }
+
     /* testGetCssProperty */
 
     @Test
@@ -171,6 +187,13 @@ public class PageObjectIntegrationTest extends AbstractWebTesterIntegrationTest 
     public PageObject getPageObjectForID(String id) {
         PageObjectModel metaData = PageObjectModel.forPageFragment(getBrowser(), Identifications.id(id), null);
         return new DefaultPageObjectFactory().create(PageObject.class, metaData);
+    }
+
+    public static class TestPage extends PageObject {
+
+        @IdentifyUsing("forSetAttribute")
+        TextField forSetAttribute;
+
     }
 
     public static class InvalidationPageObject extends PageObject {

@@ -102,6 +102,8 @@
 		<version.findbugs.maven.plugin>3.0.0</version.findbugs.maven.plugin>
 		<version.cobertura.maven.plugin>2.6</version.cobertura.maven.plugin>
 		<version.license.maven.plugin>1.8</version.license.maven.plugin>
+		<version.maven.gpg.plugin>1.5</version.maven.gpg.plugin>
+		<version.maven.nexus.staging.plugin>1.6.3</version.maven.nexus.staging.plugin>
 
 	</properties>
 
@@ -525,6 +527,37 @@
 					</executions>
 				</plugin>
 
+				<!-- signing jars plugin -->
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-gpg-plugin</artifactId>
+					<version>${version.maven.gpg.plugin}</version>
+					<executions>
+						<execution>
+							<id>sign-artifacts</id>
+							<phase>verify</phase>
+							<goals>
+								<goal>sign</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+
+				<!-- maven central release plugin -->
+
+				<plugin>
+					<groupId>org.sonatype.plugins</groupId>
+					<artifactId>nexus-staging-maven-plugin</artifactId>
+					<version>${version.maven.nexus.staging.plugin}</version>
+					<extensions>true</extensions>
+					<configuration>
+						<serverId>ossrh</serverId>
+						<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+						<autoReleaseAfterClose>false</autoReleaseAfterClose>
+					</configuration>
+				</plugin>
+
 				<!-- other plugins -->
 
 				<plugin>
@@ -655,10 +688,19 @@
 		</profile>
 
 		<profile>
-			<id>skip-tests</id>
-			<properties>
-				<skipTests>true</skipTests>
-			</properties>
+			<id>maven-central</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+					</plugin>
+					<plugin>
+						<groupId>org.sonatype.plugins</groupId>
+						<artifactId>nexus-staging-maven-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
 		</profile>
 
 	</profiles>

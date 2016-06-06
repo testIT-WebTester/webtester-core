@@ -152,11 +152,9 @@ public interface Browser {
     void close();
 
     /**
-     * Closes the currently active window and switches the focus back to the
-     * default content. Should only be used to close child windows spawned by
-     * the application under test.
+     * Closes the currently active window.
      * <p>
-     * If this method is used to close the main application window it might shut
+     * If this method is used to close the last application window it will shut
      * down the browser and make this instance unusable. If you want to shut
      * down the whole {@link Browser browser} use {@link #close()} instead.
      *

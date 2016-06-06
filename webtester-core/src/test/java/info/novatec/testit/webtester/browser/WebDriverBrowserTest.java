@@ -168,10 +168,8 @@ public class WebDriverBrowserTest {
 
     @Test
     public void testThatClosingTheCurrentWindowInvokesCorrectWebDriverMethods() {
-        TargetLocator locator = mockTargetLocator();
         cut.closeCurrentWindow();
         verify(webDriver).close();
-        verify(locator).defaultContent();
     }
 
     @Test

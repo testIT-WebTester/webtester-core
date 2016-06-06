@@ -179,7 +179,6 @@ public class WebDriverBrowser implements Browser {
             public void execute(Browser browser) {
                 ClosedWindowEvent event = new ClosedWindowEvent(browser);
                 getWebDriver().close();
-                getWebDriver().switchTo().defaultContent();
                 fireEvent(event);
             }
 

@@ -1,6 +1,5 @@
 package info.novatec.testit.webtester.utils.conditions;
 
-import org.openqa.selenium.WebDriverException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,14 +24,8 @@ public class Present implements Predicate<PageObject> {
 
     @Override
     public boolean apply(PageObject pageObject) {
-        try {
-            pageObject.invalidate();
-            pageObject.getWebElement();
-            return true;
-        } catch (WebDriverException e) {
-            logger.trace("could not find web element: {}", e.getMessage());
-        }
-        return false;
+        pageObject.invalidate();
+        return pageObject.isPresent();
     }
 
     @Override

@@ -223,6 +223,23 @@ public class PageObject implements Invalidateable {
     }
 
     /**
+     * Returns whether or not this {@link PageObject} is part of the current page's DOM.
+     * This can be used to avoid catching the {@link NoSuchElementException} in order to check if an element exists.
+     *
+     * @return true if the object is part of the page's DOM
+     * @see WebElement
+     * @since 1.2.0
+     */
+    public boolean isPresent() {
+        try {
+            getWebElement();
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    /**
      * @return whether or not the {@linkplain PageObject} is currently enabled
      * @since 0.9.0
      */

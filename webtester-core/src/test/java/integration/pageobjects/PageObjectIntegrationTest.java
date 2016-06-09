@@ -35,6 +35,8 @@ public class PageObjectIntegrationTest extends AbstractWebTesterIntegrationTest 
     private static final String ENABLED_ELEMENT = "enabledElement";
     private static final String DISABLED_ELEMENT = "disabledElement";
     private static final String ATTRIBUTED_ELEMENT = "attributedElement";
+    private static final String PRESENT_ELEMENT = "presentElement";
+    private static final String UNKNOWN_ELEMENT = "unknown";
 
     @Override
     protected String getHTMLFilePath() {
@@ -106,6 +108,18 @@ public class PageObjectIntegrationTest extends AbstractWebTesterIntegrationTest 
     public final void testIsVisible_ElementInvisible_False() {
         PageObject element = getPageObjectForID(INVISIBLE_ELEMENT);
         assertThat(element.isVisible(), is(false));
+    }
+
+    @Test
+    public final void testIsPresent_ElementPresent_True() {
+        PageObject element = getPageObjectForID(PRESENT_ELEMENT);
+        assertThat(element.isPresent(), is(true));
+    }
+
+    @Test
+    public final void testIsPresent_ElementNotPresent_False() {
+        PageObject element = getPageObjectForID(UNKNOWN_ELEMENT);
+        assertThat(element.isPresent(), is(false));
     }
 
     /* testIsEnabled */

@@ -108,6 +108,34 @@ public class PageObjectMatcher {
     }
 
     /**
+     * Returns whether a {@link PageObject page object} is present.
+     *
+     * @return true if present, otherwise false
+     * @since 1.2.0
+     */
+    public static Matcher<PageObject> present() {
+
+        return new TypeSafeMatcher<PageObject>() {
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("object to be present");
+            }
+
+            @Override
+            protected void describeMismatchSafely(PageObject pageObject, Description mismatchDescription) {
+                mismatchDescription.appendText("present was '" + pageObject.isPresent() + '\'');
+            }
+
+            @Override
+            protected boolean matchesSafely(PageObject pageObject) {
+                return pageObject.isPresent();
+            }
+
+        };
+    }
+
+    /**
      * Returns whether a {@link PageObject page object} is enabled.
      *
      * @return true if enabled, otherwise false

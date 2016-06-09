@@ -3,6 +3,7 @@ package info.novatec.testit.webtester.support.hamcrest;
 import static info.novatec.testit.webtester.support.hamcrest.PageObjectMatcher.enabled;
 import static info.novatec.testit.webtester.support.hamcrest.PageObjectMatcher.hasAttributeWithValue;
 import static info.novatec.testit.webtester.support.hamcrest.PageObjectMatcher.hasVisibleText;
+import static info.novatec.testit.webtester.support.hamcrest.PageObjectMatcher.present;
 import static info.novatec.testit.webtester.support.hamcrest.PageObjectMatcher.visible;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsNot.not;
@@ -101,6 +102,30 @@ public class PageObjectMatcherTest {
     public void notVisibleFalseTest() {
         doReturn(true).when(pageObject).isVisible();
         assertThat(pageObject, not(visible()));
+    }
+
+    /* present */
+
+    @Test
+    public void presentTrueTest() {
+        doReturn(true).when(pageObject).isPresent();
+        assertThat(pageObject, present());
+    }
+
+    @Test(expected = AssertionError.class)
+    public void presentFalseTest() {
+        assertThat(pageObject, present());
+    }
+
+    @Test
+    public void notPresentTrueTest() {
+        assertThat(pageObject, not(present()));
+    }
+
+    @Test(expected = AssertionError.class)
+    public void notPresentFalseTest() {
+        doReturn(true).when(pageObject).isPresent();
+        assertThat(pageObject, not(present()));
     }
 
     /* enabled */

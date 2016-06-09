@@ -76,6 +76,7 @@ public class TestObjectFactory {
         private String visibleText = "";
         private boolean isEnabled = true;
         private boolean isVisible = true;
+        private boolean isPresent = true;
         private boolean isReadOnly;
         private Throwable getWebElementException;
 
@@ -118,6 +119,16 @@ public class TestObjectFactory {
             return this;
         }
 
+        public PageObjectMockBuilder present() {
+            isPresent = true;
+            return this;
+        }
+
+        public PageObjectMockBuilder notPresent() {
+            isPresent = false;
+            return this;
+        }
+
         public PageObjectMockBuilder readOnly() {
             isReadOnly = true;
             return this;
@@ -145,6 +156,7 @@ public class TestObjectFactory {
 
             doReturn(isEnabled).when(pageObject).isEnabled();
             doReturn(isVisible).when(pageObject).isVisible();
+            doReturn(isPresent).when(pageObject).isPresent();
             doReturn(String.valueOf(isReadOnly)).when(pageObject).getAttribute("readonly");
 
             if (getWebElementException != null) {

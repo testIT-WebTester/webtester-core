@@ -15,13 +15,13 @@ public class PresentTest {
 
     @Test
     public void testThatExistingWebElementEvaluatesToTrue() {
-        PageObject pageObject = pageObject().build();
+        PageObject pageObject = pageObject().present().build();
         assertThat(cut.apply(pageObject), is(true));
     }
 
     @Test
     public void testThatNonExistingWebElementEvaluatesToFalse() {
-        PageObject pageObject = pageObject().throwsNoSuchElementException().build();
+        PageObject pageObject = pageObject().notPresent().build();
         assertThat(cut.apply(pageObject), is(false));
     }
 

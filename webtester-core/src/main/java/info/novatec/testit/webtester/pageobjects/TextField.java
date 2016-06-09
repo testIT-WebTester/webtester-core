@@ -9,7 +9,6 @@ import info.novatec.testit.webtester.api.annotations.Mapping;
 import info.novatec.testit.webtester.api.callbacks.PageObjectCallback;
 import info.novatec.testit.webtester.api.exceptions.PageObjectIsDisabledException;
 import info.novatec.testit.webtester.api.exceptions.PageObjectIsInvisibleException;
-import info.novatec.testit.webtester.api.exceptions.StaleElementRecoveryException;
 import info.novatec.testit.webtester.api.pageobjects.traits.HasText;
 import info.novatec.testit.webtester.eventsystem.events.pageobject.TextAppendedEvent;
 import info.novatec.testit.webtester.eventsystem.events.pageobject.TextClearedEvent;
@@ -86,9 +85,7 @@ public class TextField extends PageObject implements HasText {
      * {@link TextField text field}.
      * <p>
      * <b>Note:</b> is is not advised to try and send {@link Keys} via this method!
-     * Doing so may in some cases lead to unintended side effects. I.e. sending ENTER
-     * to a search field will cause a {@link StaleElementRecoveryException} if this action
-     * navigates to another page.
+     * Doing so may in some cases lead to unintended side effects.
      *
      * @param textToSet the text to set
      * @return the same instance for fluent API use
@@ -120,9 +117,7 @@ public class TextField extends PageObject implements HasText {
      * {@link TextField text field}.
      * <p>
      * <b>Note:</b> is is not advised to try and send {@link Keys} via this method!
-     * Doing so may in some cases lead to unintended side effects. I.e. sending ENTER
-     * to a search field will cause a {@link StaleElementRecoveryException} if this action
-     * navigates to another page.
+     * Doing so may in some cases lead to unintended side effects.
      *
      * @param textToAppend the text to append
      * @return the same instance for fluent API use

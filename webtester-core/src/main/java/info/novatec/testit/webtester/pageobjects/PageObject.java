@@ -3,7 +3,6 @@ package info.novatec.testit.webtester.pageobjects;
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.SearchContext;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,19 +16,18 @@ import info.novatec.testit.webtester.api.exceptions.WrongElementClassException;
 import info.novatec.testit.webtester.api.pageobjects.Identification;
 import info.novatec.testit.webtester.api.pageobjects.PageObjectFactory;
 import info.novatec.testit.webtester.api.pageobjects.PageObjectList;
-import info.novatec.testit.webtester.api.pageobjects.traits.Invalidateable;
 import info.novatec.testit.webtester.eventsystem.EventSystem;
 import info.novatec.testit.webtester.eventsystem.events.pageobject.ClickedEvent;
-import info.novatec.testit.webtester.internal.validation.MappingValidator;
 import info.novatec.testit.webtester.internal.annotations.SetViaInjection;
 import info.novatec.testit.webtester.internal.pageobjects.ActionTemplate;
 import info.novatec.testit.webtester.internal.pageobjects.PageObjectModel;
+import info.novatec.testit.webtester.internal.validation.MappingValidator;
 import info.novatec.testit.webtester.utils.Identifications;
-import info.novatec.testit.webtester.utils.Invalidator;
 import info.novatec.testit.webtester.utils.Marker;
 import info.novatec.testit.webtester.utils.PageObjectFinder;
 import info.novatec.testit.webtester.utils.PageObjectFinder.IdentificationFinder;
 import info.novatec.testit.webtester.utils.PageObjectFinder.TypedFinder;
+
 
 /**
  * Base implementation for all page object classes. Any class sub-classing this
@@ -39,16 +37,20 @@ import info.novatec.testit.webtester.utils.PageObjectFinder.TypedFinder;
  *
  * @since 0.9.0
  */
-public class PageObject implements Invalidateable {
+public class PageObject {
 
     private static final Logger logger = LoggerFactory.getLogger(PageObject.class);
 
     @SetViaInjection
     private PageObjectModel model;
-    private WebElement cachedWebElement;
 
-	private ActionTemplate actionTemplate;
+    private ActionTemplate actionTemplate;
     private MappingValidator validator;
+
+    /**
+     * This is the hard coded {@link WebElement} used in case the page object acts as a wrapper instead of a proxy.
+     */
+    private WebElement webElement;
 
     protected PageObject() {
         this.actionTemplate = new ActionTemplate(this);
@@ -69,10 +71,10 @@ public class PageObject implements Invalidateable {
      * @since 0.9.9
      */
     public WebElement getWebElement() {
-        if (cachedWebElement != null) {
-            return cachedWebElement;
+        if(webElement != null) {
+            return validate(webElement);
         }
-        return optionallyCache(validate(findWebElement()));
+        return validate(findWebElement());
     }
 
     private WebElement findWebElement() {
@@ -117,13 +119,6 @@ public class PageObject implements Invalidateable {
     @Deprecated
     protected boolean isCorrectClassForWebElement(WebElement webElementToBeChecked) {
         return true;
-    }
-
-    private WebElement optionallyCache(WebElement webElement) {
-        if (model.cachingIsEnabled()) {
-            cachedWebElement = webElement;
-        }
-        return webElement;
     }
 
     /**
@@ -205,15 +200,7 @@ public class PageObject implements Invalidateable {
             @Override
             public Boolean execute(PageObject pageObject) {
                 try {
-                    /* this cannot rely on the executeAction(..) methods stale
-                     * element handling because it has to handle the case where
-                     * the object does not exist (anymore) */
-                    try {
-                        return pageObject.getWebElement().isDisplayed();
-                    } catch (StaleElementReferenceException e) {
-                        Invalidator.invalidate(pageObject);
-                        return pageObject.getWebElement().isDisplayed();
-                    }
+                    return pageObject.getWebElement().isDisplayed();
                 } catch (NoSuchElementException e) {
                     return Boolean.FALSE;
                 }
@@ -491,33 +478,14 @@ public class PageObject implements Invalidateable {
      * Invalidates this {@linkplain PageObject} forcing it to reinitialize
      * itself when it is used again. This can be necessary when the element is
      * modified by the system under test (e.g. moved).
-     * <p>
-     * This method does not invalidate fragments included in this page object!
-     * To invalidate a complete page with all its fragments use
-     * {@link Invalidator#invalidate(PageObject)}!
-     * <p>
-     * <b>Note:</b> If this page object is part of a list it will not be
-     * invalidated, because it lacks the model information to be reinitialized!
      *
      * @since 0.9.9
+     * @deprecated caching was removed in v1.2 - this exists in order to NOT break the API till v1.3
      */
-    @Override
+    @Deprecated
     public void invalidate() {
-        if (!model.isPartOfList()) {
-            logger.trace(logMessage("invalidated"));
-            cachedWebElement = null;
-        } else {
-            logger.debug("skipping invalidation of {} because it is part of a list", this);
-        }
-    }
-
-    /**
-     * @return whether or not this {@linkplain PageObject}s
-     * {@linkplain WebElement} is initialized or not.
-     * @since 0.9.6
-     */
-    public final boolean isInitialized() {
-        return cachedWebElement != null;
+        // TODO: remove in v1.3
+        logger.warn("deprecated method 'invalidate()' used...");
     }
 
     /**
@@ -557,29 +525,29 @@ public class PageObject implements Invalidateable {
      * @since 0.9.7
      */
     public final void executeAction(PageObjectCallback callback) {
-		actionTemplate.executeAction(callback);
+        actionTemplate.executeAction(callback);
     }
 
-	/**
-	 * Executes the given {@link PageObjectCallbackWithReturnValue callback}
-	 * with this {@link PageObject page object} as input and a return value of
-	 * type B as output. This is a convenience method for calling the
+    /**
+     * Executes the given {@link PageObjectCallbackWithReturnValue callback}
+     * with this {@link PageObject page object} as input and a return value of
+     * type B as output. This is a convenience method for calling the
      * {@link ActionTemplate#executeAction(PageObjectCallbackWithReturnValue)} method.
-	 *
-	 * @param <B> the type of the return value of the action
-	 * @param callback the callback to execute
-	 * @return the return value of the callback
-	 * @since 0.9.7
-	 */
-	public final <B> B executeAction(PageObjectCallbackWithReturnValue<B> callback) {
-		return actionTemplate.executeAction(callback);
-	}
+     *
+     * @param <B> the type of the return value of the action
+     * @param callback the callback to execute
+     * @return the return value of the callback
+     * @since 0.9.7
+     */
+    public final <B> B executeAction(PageObjectCallbackWithReturnValue<B> callback) {
+        return actionTemplate.executeAction(callback);
+    }
 
     protected String logMessage(String message) {
         return model.getLogPrefix() + message;
     }
 
-	@Override
+    @Override
     public String toString() {
 
         StringBuilder subject = new StringBuilder(getClass().getSimpleName());

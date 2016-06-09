@@ -6,8 +6,6 @@ import org.openqa.selenium.SearchContext;
 
 import info.novatec.testit.webtester.api.annotations.Internal;
 import info.novatec.testit.webtester.api.browser.Browser;
-import info.novatec.testit.webtester.api.config.Configuration;
-import info.novatec.testit.webtester.api.enumerations.Caching;
 import info.novatec.testit.webtester.api.pageobjects.Identification;
 import info.novatec.testit.webtester.pageobjects.PageObject;
 import info.novatec.testit.webtester.utils.Identifications;
@@ -20,16 +18,10 @@ public class PageObjectModel {
     private Identification identification;
     private PageObject parent;
 
-    private Caching caching = Caching.DEFAULT;
     private String name;
     private boolean partOfList;
 
     protected PageObjectModel() {
-    }
-
-    public boolean cachingIsEnabled() {
-        Configuration configuration = getBrowser().getConfiguration();
-        return Caching.shouldCache(configuration, caching);
     }
 
     public SearchContext getSearchContext() {
@@ -68,10 +60,6 @@ public class PageObjectModel {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setCaching(Caching caching) {
-        this.caching = caching;
     }
 
     public boolean isPartOfList() {

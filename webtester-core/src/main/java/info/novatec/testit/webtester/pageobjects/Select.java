@@ -38,8 +38,6 @@ public class Select extends PageObject {
     private static final String NOTHING_SELECTED_INDEX =
         "Could not return selected option's index since there is nothing selected!";
 
-    private org.openqa.selenium.support.ui.Select select;
-
     /**
      * Selects all options by their visible text. Giving no texts as parameters
      * will simply deselect all options. If this {@link Select select} is not a
@@ -366,17 +364,8 @@ public class Select extends PageObject {
         });
     }
 
-    @Override
-    public void invalidate() {
-        select = null;
-        super.invalidate();
-    }
-
     private org.openqa.selenium.support.ui.Select getSelect() {
-        if (select == null) {
-            select = new org.openqa.selenium.support.ui.Select(getWebElement());
-        }
-        return select;
+        return new org.openqa.selenium.support.ui.Select(getWebElement());
     }
 
     private List<WebElement> getAllOptions() {

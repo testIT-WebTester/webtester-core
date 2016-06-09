@@ -9,6 +9,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
@@ -29,6 +30,11 @@ public class CheckboxTest extends AbstractPageObjectTest {
 
     @InjectMocks
     Checkbox cut;
+
+    @Before
+    public void configureWebElementMock() {
+        stubWebElementTagAndType("input", "checkbox");
+    }
 
     /* getting selection state */
 
@@ -112,7 +118,7 @@ public class CheckboxTest extends AbstractPageObjectTest {
     }
 
     @Test
-    public void testThatChaningSelectionFiresCorrectEvent_NotSelectedToSelected() {
+    public void testThatChangingSelectionFiresCorrectEvent_NotSelectedToSelected() {
 
         elementIsVisibleAndEnabled();
         stubWebElementBeforeAndAfterSelectionState(false, true);
@@ -128,7 +134,7 @@ public class CheckboxTest extends AbstractPageObjectTest {
     }
 
     @Test
-    public void testThatChaningSelectionFiresCorrectEvent_SelectedToNotSelected() {
+    public void testThatChangingSelectionFiresCorrectEvent_SelectedToNotSelected() {
 
         elementIsVisibleAndEnabled();
         stubWebElementBeforeAndAfterSelectionState(true, false);

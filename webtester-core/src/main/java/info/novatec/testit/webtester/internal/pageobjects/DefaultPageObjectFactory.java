@@ -10,7 +10,6 @@ import java.lang.reflect.ParameterizedType;
 import java.util.Deque;
 import java.util.List;
 import java.util.Set;
-
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang.StringUtils;
@@ -25,7 +24,6 @@ import info.novatec.testit.webtester.api.annotations.IdentifyUsing;
 import info.novatec.testit.webtester.api.annotations.Internal;
 import info.novatec.testit.webtester.api.annotations.Visible;
 import info.novatec.testit.webtester.api.browser.Browser;
-import info.novatec.testit.webtester.api.enumerations.Caching;
 import info.novatec.testit.webtester.api.exceptions.PageObjectFactoryException.ConstructorException;
 import info.novatec.testit.webtester.api.exceptions.PageObjectFactoryException.GettingPageObjectFieldException;
 import info.novatec.testit.webtester.api.exceptions.PageObjectFactoryException.GettingPageObjectListFieldException;
@@ -59,7 +57,7 @@ public final class DefaultPageObjectFactory implements PageObjectFactory {
     private static final Logger logger = LoggerFactory.getLogger(DefaultPageObjectFactory.class);
 
     private static final String FIELD_NAME_MODEL = "model";
-    private static final String FIELD_NAME_WEB_ELEMENT = "cachedWebElement";
+    private static final String FIELD_NAME_WEB_ELEMENT = "webElement";
 
     @Override
     public <T extends PageObject> T create(Class<T> pageClazz, PageObjectModel model) {
@@ -161,7 +159,6 @@ public final class DefaultPageObjectFactory implements PageObjectFactory {
         Identification identification = getIdentificationForField(field);
 
         PageObjectModel metaData = PageObjectModel.forPageFragment(browser, identification, pageInstance);
-        metaData.setCaching(getCachingForField(field));
         metaData.setName(getNameForField(field));
 
         try {
@@ -180,7 +177,6 @@ public final class DefaultPageObjectFactory implements PageObjectFactory {
         Class<? extends PageObject> listType = getPageObjectClassFromListField(pageInstance, field);
 
         PageObjectModel listMetaData = PageObjectModel.forPageFragment(browser, identification, pageInstance);
-        listMetaData.setCaching(getCachingForField(field));
         listMetaData.setName(getNameForField(field));
 
         try {
@@ -369,14 +365,6 @@ public final class DefaultPageObjectFactory implements PageObjectFactory {
             return Identifications.fromAnnotation(findBys);
         }
         return null;
-    }
-
-    private Caching getCachingForField(Field field) {
-        IdentifyUsing identifyUsing = field.getAnnotation(IdentifyUsing.class);
-        if (identifyUsing != null) {
-            return identifyUsing.caching();
-        }
-        return Caching.DEFAULT;
     }
 
     private String getNameForField(Field field) {

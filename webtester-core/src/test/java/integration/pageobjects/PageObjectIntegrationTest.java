@@ -19,7 +19,6 @@ import info.novatec.testit.webtester.internal.pageobjects.PageObjectModel;
 import info.novatec.testit.webtester.pageobjects.PageObject;
 import info.novatec.testit.webtester.pageobjects.TextField;
 import info.novatec.testit.webtester.utils.Identifications;
-import info.novatec.testit.webtester.utils.Invalidator;
 
 
 public class PageObjectIntegrationTest extends AbstractWebTesterIntegrationTest {
@@ -172,28 +171,6 @@ public class PageObjectIntegrationTest extends AbstractWebTesterIntegrationTest 
     public final void testGetCssProperty_CSSPropertySet_ValueOfTheProperty() {
         PageObject element = getPageObjectForID("cssElement");
         assertThat(element.getCssProperty("border-width"), is(equalTo("1px")));
-    }
-
-    /* testInvalidate */
-
-    @Test
-    public final void testInvalidate_WithInvalidation_ElementCorrectlyReinitialized() {
-
-        InvalidationPageObject page = getBrowser().create(InvalidationPageObject.class);
-        assertThat(page.forInvalidation.getText(), is(equalTo("element with id")));
-        assertThat(page.forInvalidationOfList.get(0).getText(), is("A"));
-        assertThat(page.forInvalidationOfList.get(1).getText(), is("B"));
-        assertThat(page.forInvalidationOfList.get(2).getText(), is("C"));
-
-        getBrowser().open(getFormattedTestResourcePath("html/pageobject/base/pageOne.html"));
-
-        Invalidator.invalidate(page);
-
-        assertThat(page.forInvalidation.getText(), is(equalTo("other element with same id!")));
-        assertThat(page.forInvalidationOfList.get(0).getText(), is("D"));
-        assertThat(page.forInvalidationOfList.get(1).getText(), is("E"));
-        assertThat(page.forInvalidationOfList.get(2).getText(), is("F"));
-
     }
 
     /* UTILITIES */

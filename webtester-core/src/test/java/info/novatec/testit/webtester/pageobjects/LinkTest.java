@@ -2,6 +2,7 @@ package info.novatec.testit.webtester.pageobjects;
 
 import static org.mockito.Mockito.verify;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 
@@ -15,6 +16,11 @@ public class LinkTest extends AbstractPageObjectTest {
 
     @InjectMocks
     Link cut;
+
+    @Before
+    public void configureWebElementMock() {
+        stubWebElementTag("a");
+    }
 
     /* clicking */
 

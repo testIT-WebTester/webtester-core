@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 
@@ -18,6 +19,11 @@ public class RadioButtonTest extends AbstractPageObjectTest {
 
     @InjectMocks
     RadioButton cut;
+
+    @Before
+    public void configureWebElementMock() {
+        stubWebElementTagAndType("input", "radio");
+    }
 
     /* selection state */
 

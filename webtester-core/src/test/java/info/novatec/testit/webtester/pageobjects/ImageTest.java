@@ -6,6 +6,7 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 
 import org.apache.commons.lang.StringUtils;
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 
@@ -19,6 +20,11 @@ public class ImageTest extends AbstractPageObjectTest {
 
     @InjectMocks
     Image cut;
+
+    @Before
+    public void configureWebElementMock() {
+        stubWebElementTag("img");
+    }
 
     /* source path */
 

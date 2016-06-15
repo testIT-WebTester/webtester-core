@@ -4,6 +4,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.doReturn;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 
@@ -15,6 +16,11 @@ public class TextAreaTest extends AbstractPageObjectTest {
 
     @InjectMocks
     TextArea cut;
+
+    @Before
+    public void configureWebElementMock() {
+        stubWebElementTag("textarea");
+    }
 
     /* column count */
 

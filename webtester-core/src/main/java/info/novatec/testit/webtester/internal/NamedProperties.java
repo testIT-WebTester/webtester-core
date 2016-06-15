@@ -66,13 +66,7 @@ public enum NamedProperties {
     @Documentation("Default interval in which to check a condition for wait operations.")
     @TypeDefinition(Constants.MILISECONDS_AS_INT)
     @DefaultValue("100")
-    WAIT_INTERVAL("wait.interval"),
-
-    @Documentation("Whether or not page object's wrapped web elements will be cached or resolved for each action."
-        + " Has a great impact on stability when testing AJAX heavy application at the cost of performance.")
-    @TypeDefinition(Constants.BOOLEAN)
-    @DefaultValue("true")
-    PAGEOBJECT_CACHE("pageobjects.caching");
+    WAIT_INTERVAL("wait.interval");
 
     private final String key;
 
@@ -85,7 +79,7 @@ public enum NamedProperties {
     }
 
     public static Set<String> getKeys() {
-        Set<String> keys = new HashSet<String>();
+        Set<String> keys = new HashSet<>();
         for (NamedProperties configurationKey : values()) {
             keys.add(configurationKey.getKey());
         }

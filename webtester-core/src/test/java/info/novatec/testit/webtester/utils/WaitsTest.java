@@ -4,6 +4,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.mockito.Mockito.atMost;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -53,6 +55,18 @@ public class WaitsTest {
         } catch (TimeoutException e) {
             assertThat(e.getCause(), is(sameInstance(expected)));
         }
+    }
+
+    @Test
+    public void conditionIsCheckedAtLeastOnceEvenWithoutTimeout() {
+
+        Supplier supplier = mock(Supplier.class);
+        doReturn(true).when(supplier).get();
+
+        Waits.waitUntil(0, TimeUnit.MILLISECONDS, supplier);
+
+        verify(supplier, times(1)).get();
+
     }
 
 }

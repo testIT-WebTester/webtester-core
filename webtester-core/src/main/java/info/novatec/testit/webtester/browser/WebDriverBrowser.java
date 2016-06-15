@@ -10,7 +10,6 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -31,6 +30,7 @@ import info.novatec.testit.webtester.api.config.Configuration;
 import info.novatec.testit.webtester.api.pageobjects.Identification;
 import info.novatec.testit.webtester.api.pageobjects.PageObjectFactory;
 import info.novatec.testit.webtester.api.pageobjects.PageObjectList;
+import info.novatec.testit.webtester.browser.operations.JavaScriptExecutor;
 import info.novatec.testit.webtester.eventsystem.events.browser.AcceptedAlertEvent;
 import info.novatec.testit.webtester.eventsystem.events.browser.ClosedBrowserEvent;
 import info.novatec.testit.webtester.eventsystem.events.browser.ClosedWindowEvent;
@@ -81,6 +81,7 @@ public class WebDriverBrowser implements Browser {
      * Flag to mark if this {@link WebDriverBrowser browser} is closed.
      */
     private boolean closed;
+    private final JavaScriptExecutor javaScript;
 
     /**
      * Creates a new {@link WebDriverBrowser} instance wrapping the given
@@ -95,6 +96,7 @@ public class WebDriverBrowser implements Browser {
     protected WebDriverBrowser(WebDriver webDriver) {
         this.webDriver = webDriver;
         this.identification = new BrowserIdentification();
+        this.javaScript = new JavaScriptExecutor(this);
         BrowserRegistry.registerBrowser(this);
     }
 
@@ -410,30 +412,21 @@ public class WebDriverBrowser implements Browser {
     }
 
     @Override
-    public WebDriverBrowser executeJavaScript(String script, PageObject pageObject, Object... parameters) {
-
-        Object[] parameterArray = new Object[parameters.length + 1];
-        parameterArray[0] = pageObject.getWebElement();
-
-        System.arraycopy(parameters, 0, parameterArray, 1, parameters.length);
-
-        return executeJavaScript(script, parameterArray);
-
+    public JavaScriptExecutor javaScript() {
+        return this.javaScript;
     }
 
     @Override
-    public WebDriverBrowser executeJavaScript(final String script, final Object... parameters) {
-        executeAction(new BrowserCallback() {
+    public WebDriverBrowser executeJavaScript(String script, PageObject pageObject, Object... parameters) {
+        // TODO: remove method in v1.3
+        javaScript().execute(script, pageObject, parameters);
+        return this;
+    }
 
-            @Override
-            public void execute(Browser browser) {
-                if (!(getWebDriver() instanceof JavascriptExecutor)) {
-                    throw new UnsupportedOperationException("WebDriver does not support JavaScript execution!");
-                }
-                (( JavascriptExecutor ) getWebDriver()).executeScript(script, parameters);
-            }
-
-        });
+    @Override
+    public WebDriverBrowser executeJavaScript(String script, Object... parameters) {
+        // TODO: remove method in v1.3
+        javaScript().executeWithReturn(script, parameters);
         return this;
     }
 
@@ -487,6 +480,19 @@ public class WebDriverBrowser implements Browser {
             public void execute(Browser browser) {
                 browser.getWebDriver().switchTo().defaultContent();
                 fireEvent(new SwitchedToDefaultContentEvent(browser));
+            }
+
+        });
+        return this;
+    }
+
+    @Override
+    public Browser scrollTo(final PageObject pageObject) {
+        executeAction(new BrowserCallback() {
+
+            @Override
+            public void execute(Browser browser) {
+                browser.executeJavaScript("arguments[0].scrollIntoView(true)", pageObject);
             }
 
         });

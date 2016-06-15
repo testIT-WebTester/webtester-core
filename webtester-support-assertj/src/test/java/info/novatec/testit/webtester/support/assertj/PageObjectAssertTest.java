@@ -98,6 +98,30 @@ public class PageObjectAssertTest {
         assertThat(pageObject).isNotVisible();
     }
 
+    /* present */
+
+    @Test
+    public void presentTrueTest() {
+        doReturn(true).when(pageObject).isPresent();
+        assertThat(pageObject).isPresent();
+    }
+
+    @Test(expected = AssertionError.class)
+    public void presentFalseTest() {
+        assertThat(pageObject).isPresent();
+    }
+
+    @Test
+    public void notPresentTrueTest() {
+        assertThat(pageObject).isNotPresent();
+    }
+
+    @Test(expected = AssertionError.class)
+    public void notPresentFalseTest() {
+        doReturn(true).when(pageObject).isPresent();
+        assertThat(pageObject).isNotPresent();
+    }
+
     /* enabled */
 
     @Test

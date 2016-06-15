@@ -164,16 +164,6 @@ public class BaseConfiguration implements Configuration {
         return setProperty(key(NamedProperties.CLEANUP_LEFTOVER_BROWSERS), enabled);
     }
 
-    @Override
-    public boolean isPageObjectCacheActive() {
-        return getBooleanProperty(key(NamedProperties.PAGEOBJECT_CACHE), Boolean.TRUE);
-    }
-
-    @Override
-    public BaseConfiguration setPageObjectCacheActive(boolean active) {
-        return setProperty(key(NamedProperties.PAGEOBJECT_CACHE), active);
-    }
-
     private String key(NamedProperties property) {
         return property.getKey();
     }

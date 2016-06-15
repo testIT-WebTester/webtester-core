@@ -1,7 +1,6 @@
 package integration.pageobjects;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 
 import org.junit.Before;
@@ -45,11 +44,10 @@ public class ListIntegrationTest extends AbstractWebTesterIntegrationTest {
     @Test
     public final void testThatListItemsCanBeRetrieved() {
 
-        ListItem listItem1 = page.fullOrderedList.getItem(0);
-        ListItem listItem2 = page.fullOrderedList.getItem(1);
-        ListItem listItem3 = page.fullOrderedList.getItem(2);
-
-        assertThat(page.fullOrderedList.getItems(), contains(listItem1, listItem2, listItem3));
+        java.util.List<ListItem> items = page.fullOrderedList.getItems();
+        assertThat(items.get(0).getVisibleText(), is("ordered item 1"));
+        assertThat(items.get(1).getVisibleText(), is("ordered item 2"));
+        assertThat(items.get(2).getVisibleText(), is("ordered item 3"));
 
     }
 

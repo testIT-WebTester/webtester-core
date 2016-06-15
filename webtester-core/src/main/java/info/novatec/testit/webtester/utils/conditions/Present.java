@@ -1,9 +1,5 @@
 package info.novatec.testit.webtester.utils.conditions;
 
-import org.openqa.selenium.WebDriverException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.google.common.base.Predicate;
 
 import info.novatec.testit.webtester.pageobjects.PageObject;
@@ -21,18 +17,9 @@ import info.novatec.testit.webtester.pageobjects.PageObject;
  */
 public class Present implements Predicate<PageObject> {
 
-    private static final Logger logger = LoggerFactory.getLogger(Present.class);
-
     @Override
     public boolean apply(PageObject pageObject) {
-        try {
-            pageObject.invalidate();
-            pageObject.getWebElement();
-            return true;
-        } catch (WebDriverException e) {
-            logger.trace("could not find web element: {}", e.getMessage());
-        }
-        return false;
+        return pageObject.isPresent();
     }
 
     @Override

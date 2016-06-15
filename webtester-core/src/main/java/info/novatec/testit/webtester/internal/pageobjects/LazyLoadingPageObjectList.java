@@ -8,6 +8,8 @@ import java.util.ListIterator;
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Predicate;
 
@@ -19,13 +21,13 @@ import info.novatec.testit.webtester.pageobjects.PageObject;
 @Internal
 public class LazyLoadingPageObjectList<E extends PageObject> implements PageObjectList<E> {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(LazyLoadingPageObjectList.class);
+
     private static final String LIST_ELEMENT_NAME = "%s - element no. %s";
     private static final String THIS_LIST_IS_IMMUTABLE = "This list is immutable!";
 
     private Class<E> elementClass;
     private PageObjectModel model;
-
-    private PageObjectList<E> internalList;
 
     public LazyLoadingPageObjectList(Class<E> elementClass, PageObjectModel model) {
         this.elementClass = elementClass;
@@ -33,26 +35,8 @@ public class LazyLoadingPageObjectList<E extends PageObject> implements PageObje
     }
 
     private PageObjectList<E> getInternalList() {
-
-        if (internalList != null) {
-            return internalList;
-        }
-
-        PageObjectList<E> list = getListOfPageObjects();
-        rememberListIfCachingIsEnabled(list);
-        return list;
-
-    }
-
-    private void rememberListIfCachingIsEnabled(PageObjectList<E> list) {
-        if (model.cachingIsEnabled()) {
-            internalList = list;
-        }
-    }
-
-    private PageObjectList<E> getListOfPageObjects() {
         int number = 0;
-        PageObjectList<E> list = new DefaultPageObjectList<E>();
+        PageObjectList<E> list = new DefaultPageObjectList<>();
         for (WebElement element : findElementsForList()) {
             list.add(wrapElement(element, getElementName(++number)));
         }
@@ -76,13 +60,15 @@ public class LazyLoadingPageObjectList<E extends PageObject> implements PageObje
     }
 
     /**
-     * Invalidates this {@link LazyLoadingPageObjectList} forcing it to
-     * reinitialize itself when it is used again. This can be necessary when
-     * elements of this list are modified by the system under test. (e.g. moved)
+     * Invalidate the list - effectively resetting its caches.
+     *
+     * @deprecated caching was removed in v1.2 - this exists in order to NOT break the API till v1.3
      */
     @Override
+    @Deprecated
     public void invalidate() {
-        internalList = null;
+        // TODO: remove in v1.3
+        LOGGER.warn("deprecated method 'invalidate()' used...");
     }
 
     /* These are all the methods defined by the List interface. They all

@@ -5,12 +5,9 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Set;
 
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.Color;
 
 import info.novatec.testit.webtester.api.exceptions.config.SetNullValuesException;
-import info.novatec.testit.webtester.pageobjects.PageObject;
-import info.novatec.testit.webtester.utils.Invalidator;
 import info.novatec.testit.webtester.utils.Waits;
 
 
@@ -261,31 +258,6 @@ public interface Configuration {
      * @since 0.9.7
      */
     Configuration setCleanupLeftoverBrowsers(boolean browserShouldCloseAutomatically);
-
-    /**
-     * Returns whether or not the {@link PageObject page object's}
-     * {@link WebElement web element} caching mechanism is activated. If true
-     * page objects will store resolved web elements until the cache is manually
-     * cleared by calling {@link PageObject#invalidate()} or using the
-     * {@link Invalidator}.
-     *
-     * @return true if caching is activated
-     * @since 0.9.9
-     */
-    boolean isPageObjectCacheActive();
-
-    /**
-     * Sets whether or not the {@link PageObject page object's}
-     * {@link WebElement web element} caching mechanism is activated. If true
-     * page objects will store resolved web elements until the cache is manually
-     * cleared by calling {@link PageObject#invalidate()} or using the
-     * {@link Invalidator}.
-     *
-     * @param active whether or not caching should be activated
-     * @return the same configuration for fluent API
-     * @since 0.9.9
-     */
-    Configuration setPageObjectCacheActive(boolean active);
 
     /**
      * Removes the property with the given key from this {@link Configuration

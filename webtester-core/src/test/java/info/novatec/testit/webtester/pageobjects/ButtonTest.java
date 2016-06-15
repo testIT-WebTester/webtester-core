@@ -24,6 +24,7 @@ public class ButtonTest extends AbstractPageObjectTest {
 
     @Test
     public void testThatValueCanBeRetrieved() {
+        stubWebElementTag("button");
         doReturn("foo").when(webElement).getAttribute("value");
         String value = cut.getValue();
         assertThat(value, is("foo"));
@@ -31,6 +32,8 @@ public class ButtonTest extends AbstractPageObjectTest {
 
     @Test
     public void testThatEmptyStringIsReturnedIfNoValueIsAvailable() {
+        stubWebElementTag("button");
+        doReturn(null).when(webElement).getAttribute("value");
         String value = cut.getValue();
         assertThat(value, is(StringUtils.EMPTY));
     }
@@ -39,7 +42,7 @@ public class ButtonTest extends AbstractPageObjectTest {
 
     @Test
     public void testThatLabelIsRetrievedFormValueAttributeForInputButtons() {
-        stubWebElementTag("input");
+        stubWebElementTagAndType("input", "button");
         doReturn("label").when(webElement).getAttribute("value");
         String text = cut.getLabel();
         assertThat(text, is("label"));
@@ -47,7 +50,7 @@ public class ButtonTest extends AbstractPageObjectTest {
 
     @Test
     public void testThatEmptyStringIsReturnedIfNoValueIsAvailableForInputButtons() {
-        stubWebElementTag("input");
+        stubWebElementTagAndType("input", "button");
         String text = cut.getLabel();
         assertThat(text, is(StringUtils.EMPTY));
     }
@@ -71,18 +74,21 @@ public class ButtonTest extends AbstractPageObjectTest {
 
     @Test
     public void testThatClickingAButtonDelegatesToCorrectMethod() {
+        stubWebElementTag("button");
         cut.click();
         verify(webElement).click();
     }
 
     @Test(expected = PageObjectIsInvisibleException.class)
     public void testThatClickingAnInvisibleButtonThrowsException() {
+        stubWebElementTag("button");
         elementIsInvisible();
         cut.click();
     }
 
     @Test(expected = PageObjectIsDisabledException.class)
     public void testThatClickingADisabledButtonThrowsException() {
+        stubWebElementTag("button");
         elementIsDisabled();
         cut.click();
     }

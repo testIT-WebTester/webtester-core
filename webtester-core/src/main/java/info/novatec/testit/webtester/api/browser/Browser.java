@@ -10,6 +10,7 @@ import info.novatec.testit.webtester.api.pageobjects.Identification;
 import info.novatec.testit.webtester.api.pageobjects.PageObjectFactory;
 import info.novatec.testit.webtester.api.pageobjects.PageObjectList;
 import info.novatec.testit.webtester.browser.BrowserRegistry;
+import info.novatec.testit.webtester.browser.operations.JavaScriptExecutor;
 import info.novatec.testit.webtester.eventsystem.events.browser.AbstractBrowserEvent;
 import info.novatec.testit.webtester.pageobjects.GenericElement;
 import info.novatec.testit.webtester.pageobjects.PageObject;
@@ -300,6 +301,14 @@ public interface Browser {
     String getPageSource();
 
     /**
+     * Returns this {@link Browser browser's} {@link JavaScriptExecutor} operations.
+     *
+     * @return the JavaScript operations
+     * @since 1.2
+     */
+    JavaScriptExecutor javaScript();
+
+    /**
      * Executes the given JavaScript code for the given {@link PageObject}
      * (available in script as arguments[0]) with the given parameters
      * (accessible as arguments[1] - arguments[n]).
@@ -309,8 +318,10 @@ public interface Browser {
      * @param parameters any of Boolean, Long, String, List, WebElement or null.
      * @return the same browser instance for fluent API use
      * @since 0.9.6 fluent API support
+     * @deprecated use methods from {@link #javaScript()} instead - will be removed with v1.3
      */
-    Browser executeJavaScript(String script, PageObject pageObject, Object... parameters);
+    @Deprecated
+    Browser executeJavaScript(String script, PageObject pageObject, Object... parameters); // TODO: remove in v1.3
 
     /**
      * Executes the given JavaScript code with the given parameters (accessible
@@ -320,8 +331,10 @@ public interface Browser {
      * @param parameters any of Boolean, Long, String, List, WebElement or null.
      * @return the same browser instance for fluent API use
      * @since 0.9.6 fluent API support
+     * @deprecated use methods from {@link #javaScript()} instead - will be removed with v1.3
      */
-    Browser executeJavaScript(String script, Object... parameters);
+    @Deprecated
+    Browser executeJavaScript(String script, Object... parameters); // TODO: remove in v1.3
 
     /**
      * Maximizes the current {@link Browser browser} window.
@@ -386,6 +399,19 @@ public interface Browser {
      * @since 0.9.6 fluent API support
      */
     Browser setFocusOnDefaultContent();
+
+    /**
+     * Scrolls the window to the given {@link PageObject}.
+     * <p>
+     * This is done by using the {@code scrollIntoView(true)} JavaScript function on the underlying element.
+     * Since all JavaScript functionality depends heavily on the used browser this might not work in all environments.
+     * See <a href="https://developer.mozilla.org/en/docs/Web/API/Element/scrollIntoView">MDN Web API</a> for details.
+     *
+     * @param pageObject the page object to scroll into view
+     * @return the original browser of this operation
+     * @since 1.2.0
+     */
+    Browser scrollTo(PageObject pageObject);
 
     /**
      * Creates a new {@link PageObjectFinder page object finder} for this

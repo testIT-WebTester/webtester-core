@@ -7,8 +7,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.openqa.selenium.By;
+import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -28,13 +31,16 @@ public abstract class AbstractPageObjectTest {
     @Mock
     protected WebDriver webDriver;
     @Mock
+    protected SearchContext searchContext;
+    @Mock
     protected WebElement webElement;
     @Mock
     protected EventListener listener;
 
+    // TODO @Mock?
     protected Browser browser = mock(Browser.class);
     @Spy
-    protected PageObjectModel metaData = PageObjectModel.forPage(browser);
+    protected PageObjectModel model = PageObjectModel.forPage(browser);
 
     @Before
     public void setUpMockedBrowser() {
@@ -44,6 +50,8 @@ public abstract class AbstractPageObjectTest {
         doReturn(new BrowserIdentification()).when(browser).getIdentification();
 
         doReturn(configuration).when(browser).getConfiguration();
+
+        doReturn(webElement).when(webDriver).findElement(Mockito.any(By.class));
 
     }
 

@@ -163,7 +163,7 @@ public final class Waits {
         boolean conditionMet = false;
         RuntimeException lastException = null;
 
-        while (!conditionMet && timeSince(start) < effectiveTimeout) {
+        do {
             try {
                 conditionMet = condition.get();
                 logger.trace("condition '{}' met: {}", condition, conditionMet);
@@ -171,7 +171,7 @@ public final class Waits {
             } catch (RuntimeException e) {
                 lastException = e;
             }
-        }
+        } while (!conditionMet && timeSince(start) < effectiveTimeout);
 
         if (!conditionMet) {
             logger.debug("condition not met: {}", condition);

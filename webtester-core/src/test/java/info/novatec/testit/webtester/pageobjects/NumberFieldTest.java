@@ -7,6 +7,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.inOrder;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InOrder;
 import org.mockito.InjectMocks;
@@ -20,6 +21,11 @@ public class NumberFieldTest extends AbstractPageObjectTest {
 
     @InjectMocks
     NumberField cut;
+
+    @Before
+    public void configureWebElementMock() {
+        stubWebElementTagAndType("input", "number");
+    }
 
     /* get value */
 

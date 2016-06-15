@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.doReturn;
 
 import org.apache.commons.lang.StringUtils;
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 
@@ -16,6 +17,11 @@ public class IFrameTest extends AbstractPageObjectTest {
 
     @InjectMocks
     IFrame cut;
+
+    @Before
+    public void configureWebElementMock() {
+        stubWebElementTag("iframe");
+    }
 
     /* source path */
 

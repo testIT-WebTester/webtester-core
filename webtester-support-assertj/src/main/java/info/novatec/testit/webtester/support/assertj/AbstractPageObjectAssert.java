@@ -123,6 +123,34 @@ public abstract class AbstractPageObjectAssert<A extends AbstractPageObjectAsser
     }
 
     /**
+     * Asserts that the {@link PageObject page object} is present.
+     *
+     * @return same assertion instance for fluent API false
+     * @since 1.2.0
+     */
+    public A isPresent() {
+        failOnActualBeingNull();
+        if (!actual.isPresent()) {
+            failWithMessage("Expected page object to be present, but it wasn't.");
+        }
+        return ( A ) this;
+    }
+
+    /**
+     * Asserts that the {@link PageObject page object} isn't present.
+     *
+     * @return same assertion instance for fluent API false
+     * @since 1.2.0
+     */
+    public A isNotPresent() {
+        failOnActualBeingNull();
+        if (actual.isPresent()) {
+            failWithMessage("Expected page object not to be present, but it was.");
+        }
+        return ( A ) this;
+    }
+
+    /**
      * Asserts that the {@link PageObject page object} is enabled.
      *
      * @return same assertion instance for fluent API false

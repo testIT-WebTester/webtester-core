@@ -401,6 +401,19 @@ public interface Browser {
     Browser setFocusOnDefaultContent();
 
     /**
+     * Scrolls the window to the given {@link PageObject}.
+     * <p>
+     * This is done by using the {@code scrollIntoView(true)} JavaScript function on the underlying element.
+     * Since all JavaScript functionality depends heavily on the used browser this might not work in all environments.
+     * See <a href="https://developer.mozilla.org/en/docs/Web/API/Element/scrollIntoView">MDN Web API</a> for details.
+     *
+     * @param pageObject the page object to scroll into view
+     * @return the original browser of this operation
+     * @since 1.2.0
+     */
+    Browser scrollTo(PageObject pageObject);
+
+    /**
      * Creates a new {@link PageObjectFinder page object finder} for this
      * browser. This finder can be used to programmatically identify and create
      * {@link PageObject page objects}.

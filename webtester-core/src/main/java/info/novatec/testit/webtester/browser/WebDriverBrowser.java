@@ -487,6 +487,19 @@ public class WebDriverBrowser implements Browser {
     }
 
     @Override
+    public Browser scrollTo(final PageObject pageObject) {
+        executeAction(new BrowserCallback() {
+
+            @Override
+            public void execute(Browser browser) {
+                browser.executeJavaScript("arguments[0].scrollIntoView(true)", pageObject);
+            }
+
+        });
+        return this;
+    }
+
+    @Override
     public PageObjectFinder finder() {
         return new PageObjectFinder(this);
     }

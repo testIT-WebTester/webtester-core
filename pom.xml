@@ -49,6 +49,7 @@
 		<module>webtester-support-ie</module>
 		<module>webtester-support-junit</module>
 		<module>webtester-support-spring4</module>
+		<module>webtester-support-marionette</module>
 
 	</modules>
 

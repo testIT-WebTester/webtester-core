@@ -23,6 +23,7 @@ processes.
 
 - [`ChromeFactory`](support-chrome.md)
 - [`FirefoxFactory`](support-firefox.md)
+- [`MarionetteFactory`](support-marionette.md)
 - [`InternetExplorerFactory`](support-ie.md)
 
 Each of them comes in their own support module. The Firefox's factory implementation is trimmed for optimal performance.

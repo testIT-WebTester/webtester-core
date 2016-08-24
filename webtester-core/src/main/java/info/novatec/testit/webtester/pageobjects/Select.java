@@ -15,6 +15,7 @@ import info.novatec.testit.webtester.eventsystem.events.pageobject.SelectedByInd
 import info.novatec.testit.webtester.eventsystem.events.pageobject.SelectedByTextEvent;
 import info.novatec.testit.webtester.eventsystem.events.pageobject.SelectedByValueEvent;
 import info.novatec.testit.webtester.utils.Asserts;
+import info.novatec.testit.webtester.pageobjects.utils.EnhancedSelect;
 
 
 /**
@@ -84,8 +85,9 @@ public class Select extends PageObject {
             public void execute(PageObject pageObject) {
                 Asserts.assertEnabledAndVisible(pageObject);
                 deselectIfMultiple();
+                EnhancedSelect select = getSelect();
                 for (String value : values) {
-                    getSelect().selectByValue(value);
+                    select.selectByValue(value);
                     logger.debug(logMessage("selected option with value: {}"), value);
                     fireEventAndMarkAsUsed(new SelectedByValueEvent(pageObject, value));
                 }
@@ -112,8 +114,9 @@ public class Select extends PageObject {
             public void execute(PageObject pageObject) {
                 Asserts.assertEnabledAndVisible(pageObject);
                 deselectIfMultiple();
+                EnhancedSelect select = getSelect();
                 for (int index : indices) {
-                    getSelect().selectByIndex(index);
+                    select.selectByIndex(index);
                     logger.debug(logMessage("selected option with index: {}"), index);
                     fireEventAndMarkAsUsed(new SelectedByIndexEvent(pageObject, index));
                 }
@@ -225,11 +228,8 @@ public class Select extends PageObject {
             @Override
             public Integer execute(PageObject pageObject) {
                 try {
-                    List<WebElement> allOptions = getAllOptions();
-                    if (allOptions.isEmpty()) {
-                        return null;
-                    }
-                    return allOptions.indexOf(getFirstSelectedOption());
+                    String indexAsString = getFirstSelectedOption().getAttribute("index");
+                    return Integer.valueOf(indexAsString);
                 } catch (NoSuchElementException e) {
                     logger.warn(logMessage(NOTHING_SELECTED_INDEX));
                     return null;
@@ -252,11 +252,9 @@ public class Select extends PageObject {
             @Override
             public List<Integer> execute(PageObject pageObject) {
                 List<Integer> selectedIndices = new LinkedList<Integer>();
-                List<WebElement> allOptions = getAllOptions();
-                if (!allOptions.isEmpty()) {
-                    for (WebElement option : getAllSelectedOptions()) {
-                        selectedIndices.add(allOptions.indexOf(option));
-                    }
+                for (WebElement option : getAllSelectedOptions()) {
+                    String indexAsString = option.getAttribute("index");
+                    selectedIndices.add(Integer.valueOf(indexAsString));
                 }
                 return selectedIndices;
             }
@@ -353,7 +351,7 @@ public class Select extends PageObject {
      * @return true if it is, false otherwise
      * @since 0.9.0
      */
-    public Boolean isMultselect() {
+    public Boolean isMultiSelect() {
         return executeAction(new PageObjectCallbackWithReturnValue<Boolean>() {
 
             @Override
@@ -364,8 +362,8 @@ public class Select extends PageObject {
         });
     }
 
-    private org.openqa.selenium.support.ui.Select getSelect() {
-        return new org.openqa.selenium.support.ui.Select(getWebElement());
+    private EnhancedSelect getSelect() {
+        return new EnhancedSelect(getWebElement());
     }
 
     private List<WebElement> getAllOptions() {
@@ -381,7 +379,7 @@ public class Select extends PageObject {
     }
 
     private void deselectIfMultiple() {
-        if (isMultselect()) {
+        if (isMultiSelect()) {
             getSelect().deselectAll();
         }
     }

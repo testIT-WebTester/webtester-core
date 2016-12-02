@@ -1,9 +1,8 @@
 package info.novatec.testit.webtester.support.assertj;
 
-import org.assertj.core.api.Assertions;
-
 import info.novatec.testit.webtester.pageobjects.Button;
 import info.novatec.testit.webtester.pageobjects.Checkbox;
+import info.novatec.testit.webtester.pageobjects.GenericTextField;
 import info.novatec.testit.webtester.pageobjects.IFrame;
 import info.novatec.testit.webtester.pageobjects.Image;
 import info.novatec.testit.webtester.pageobjects.List;
@@ -15,6 +14,8 @@ import info.novatec.testit.webtester.pageobjects.TableField;
 import info.novatec.testit.webtester.pageobjects.TableRow;
 import info.novatec.testit.webtester.pageobjects.TextArea;
 import info.novatec.testit.webtester.pageobjects.TextField;
+
+import org.assertj.core.api.Assertions;
 
 
 /**
@@ -77,6 +78,10 @@ public final class WebTesterAssertions extends Assertions {
 
     public static TextFieldAssert assertThat(TextField actual) {
         return new TextFieldAssert(actual);
+    }
+
+    public static GenericTextFieldAssert assertThat(GenericTextField actual) {
+        return new GenericTextFieldAssert(actual);
     }
 
     private WebTesterAssertions() {

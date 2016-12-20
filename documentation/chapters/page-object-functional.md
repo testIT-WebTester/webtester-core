@@ -85,6 +85,14 @@ public class Headline extends PageObject {
 
 - `<form/>`
 
+## GenericList
+**Extends:** PageObject
+
+**HTML Tags:**
+
+- `<ol/>`
+- `<ul/>`
+
 ## GenericTextField
 **Extends:** PageObject
 

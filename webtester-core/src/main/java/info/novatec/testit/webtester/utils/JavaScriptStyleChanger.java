@@ -36,7 +36,7 @@ public class JavaScriptStyleChanger implements StyleChanger {
 
     private boolean changeStyleWithScript(String javaScript, PageObject pageObject) {
         try {
-            pageObject.getBrowser().executeJavaScript(javaScript, pageObject);
+            pageObject.getBrowser().javaScript().execute(javaScript, pageObject);
             return true;
         } catch (WebDriverException e) {
             logException(e);

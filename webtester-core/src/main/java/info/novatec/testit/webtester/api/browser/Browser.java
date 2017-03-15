@@ -309,34 +309,6 @@ public interface Browser {
     JavaScriptExecutor javaScript();
 
     /**
-     * Executes the given JavaScript code for the given {@link PageObject}
-     * (available in script as arguments[0]) with the given parameters
-     * (accessible as arguments[1] - arguments[n]).
-     *
-     * @param script the JavaScript code to be executed on the current page
-     * @param pageObject the target {@link PageObject}
-     * @param parameters any of Boolean, Long, String, List, WebElement or null.
-     * @return the same browser instance for fluent API use
-     * @since 0.9.6 fluent API support
-     * @deprecated use methods from {@link #javaScript()} instead - will be removed with v1.3
-     */
-    @Deprecated
-    Browser executeJavaScript(String script, PageObject pageObject, Object... parameters); // TODO: remove in v1.3
-
-    /**
-     * Executes the given JavaScript code with the given parameters (accessible
-     * as arguments[0] - arguments[n]).
-     *
-     * @param script the JavaScript code to be executed on the current page
-     * @param parameters any of Boolean, Long, String, List, WebElement or null.
-     * @return the same browser instance for fluent API use
-     * @since 0.9.6 fluent API support
-     * @deprecated use methods from {@link #javaScript()} instead - will be removed with v1.3
-     */
-    @Deprecated
-    Browser executeJavaScript(String script, Object... parameters); // TODO: remove in v1.3
-
-    /**
      * Maximizes the current {@link Browser browser} window.
      *
      * @return the same browser instance for fluent API use

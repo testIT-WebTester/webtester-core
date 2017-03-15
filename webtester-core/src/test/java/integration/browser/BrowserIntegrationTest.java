@@ -27,7 +27,7 @@ public class BrowserIntegrationTest extends AbstractWebTesterIntegrationTest {
     @Test
     public final void testAcceptAlertIfVisible_Alert_AlertAccapted() throws InterruptedException {
         String javaScript = "alert('accapt this message!')";
-        getBrowser().executeJavaScript(javaScript);
+        getBrowser().javaScript().execute(javaScript);
         Thread.sleep(100);
         getBrowser().acceptAlertIfVisible();
     }
@@ -42,7 +42,7 @@ public class BrowserIntegrationTest extends AbstractWebTesterIntegrationTest {
     @Test
     public final void testDeclineAlertIfVisible_Alert_AlertAccapted() throws InterruptedException {
         String javaScript = "alert('decline this message!')";
-        getBrowser().executeJavaScript(javaScript);
+        getBrowser().javaScript().execute(javaScript);
         Thread.sleep(100);
         getBrowser().declineAlertIfVisible();
     }
@@ -125,7 +125,7 @@ public class BrowserIntegrationTest extends AbstractWebTesterIntegrationTest {
     @Test
     public final void testExecuteJavaScript_WithoutParameters() throws InterruptedException {
         String javaScript = "alert('Hello World!')";
-        getBrowser().executeJavaScript(javaScript);
+        getBrowser().javaScript().execute(javaScript);
         Thread.sleep(100);
         getBrowser().acceptAlertIfVisible();
     }
@@ -134,7 +134,7 @@ public class BrowserIntegrationTest extends AbstractWebTesterIntegrationTest {
     public final void testExecuteJavaScript_WithParameters() throws InterruptedException {
         String message = "Hello World!";
         String javaScript = "alert(arguments[0])";
-        getBrowser().executeJavaScript(javaScript, message);
+        getBrowser().javaScript().execute(javaScript, message);
         Thread.sleep(100);
         getBrowser().acceptAlertIfVisible();
     }

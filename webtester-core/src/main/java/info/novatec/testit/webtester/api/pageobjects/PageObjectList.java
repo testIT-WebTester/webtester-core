@@ -26,12 +26,4 @@ public interface PageObjectList<T extends PageObject> extends List<T> {
      */
     PageObjectList<T> filter(Predicate<? super T> condition);
 
-    /**
-     * Invalidate the list - effectively resetting its caches.
-     *
-     * @deprecated caching was removed in v1.2 - this exists in order to NOT break the API till v1.3
-     */
-    @Deprecated
-    void invalidate(); // TODO: remove in v1.3
-
 }

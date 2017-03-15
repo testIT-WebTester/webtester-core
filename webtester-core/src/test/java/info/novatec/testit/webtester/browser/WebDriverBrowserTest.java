@@ -291,13 +291,6 @@ public class WebDriverBrowserTest {
         assertThat(file, is(nullValue()));
     }
 
-    /* java script */
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void testThatExecutingJavaScriptThrowsExceptionIfBrowserDoesNotSupportIt() {
-        cut.executeJavaScript(StringUtils.EMPTY);
-    }
-
     /* switches to and from other content */
 
     @Test

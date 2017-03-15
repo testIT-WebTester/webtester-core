@@ -8,8 +8,6 @@ import java.util.ListIterator;
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Predicate;
 
@@ -20,8 +18,6 @@ import info.novatec.testit.webtester.pageobjects.PageObject;
 
 @Internal
 public class LazyLoadingPageObjectList<E extends PageObject> implements PageObjectList<E> {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(LazyLoadingPageObjectList.class);
 
     private static final String LIST_ELEMENT_NAME = "%s - element no. %s";
     private static final String THIS_LIST_IS_IMMUTABLE = "This list is immutable!";
@@ -57,18 +53,6 @@ public class LazyLoadingPageObjectList<E extends PageObject> implements PageObje
         PageObjectModel elementMetaData = PageObjectModel.forPageObjectListElement(model.getBrowser(), model.getParent());
         elementMetaData.setName(name);
         return model.getBrowser().getPageObjectFactory().create(elementClass, elementMetaData, element);
-    }
-
-    /**
-     * Invalidate the list - effectively resetting its caches.
-     *
-     * @deprecated caching was removed in v1.2 - this exists in order to NOT break the API till v1.3
-     */
-    @Override
-    @Deprecated
-    public void invalidate() {
-        // TODO: remove in v1.3
-        LOGGER.warn("deprecated method 'invalidate()' used...");
     }
 
     /* These are all the methods defined by the List interface. They all

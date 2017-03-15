@@ -8,7 +8,6 @@ import java.lang.annotation.Target;
 
 import org.apache.commons.lang.StringUtils;
 
-import info.novatec.testit.webtester.api.enumerations.Caching;
 import info.novatec.testit.webtester.api.enumerations.Method;
 import info.novatec.testit.webtester.api.events.Event;
 import info.novatec.testit.webtester.pageobjects.PageObject;
@@ -33,14 +32,6 @@ import info.novatec.testit.webtester.pageobjects.PageObject;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface IdentifyUsing {
-
-    /**
-     * @return the {@link Caching} setting used when deciding whether or not
-     * this page object's web element should be cached.
-     * @since 0.9.9
-     * @deprecated caching was removed in v1.2 - this exists in order to NOT break the API till v1.3
-     */
-    @Deprecated Caching caching() default Caching.DEFAULT; // TODO: remove for v1.3
 
     /**
      * @return the {@link Method} to be used when identifying the

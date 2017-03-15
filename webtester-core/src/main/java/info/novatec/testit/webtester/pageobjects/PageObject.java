@@ -7,7 +7,6 @@ import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import info.novatec.testit.webtester.api.annotations.Mapping;
 import info.novatec.testit.webtester.api.browser.Browser;
 import info.novatec.testit.webtester.api.callbacks.PageObjectCallback;
 import info.novatec.testit.webtester.api.callbacks.PageObjectCallbackWithReturnValue;
@@ -95,30 +94,8 @@ public class PageObject {
     protected final WebElement validate(WebElement element) {
         if (validator.canValidate()) {
             validator.assertValidity(element);
-        } else {
-            if (!isCorrectClassForWebElement(element)) {
-                throw new WrongElementClassException(getClass());
-            }
         }
         return element;
-    }
-
-    /**
-     * Check if a given {@linkplain WebElement} is a valid instance of this
-     * specific {@linkplain PageObject} type.<br>
-     * The default implementation always returns true for all
-     * {@linkplain WebElement WebElements}.<br>
-     * <b>Child Classes should override this method!</b>
-     *
-     * @param webElementToBeChecked the element to check
-     * @return true if the {@linkplain WebElement} is a valid instance of this
-     * specific {@linkplain PageObject} type, false otherwise
-     * @since 0.9.0
-     * @deprecated will be removed with v1.3.0 - the annotation based {@link Mapping} approach should be used instead
-     */
-    @Deprecated
-    protected boolean isCorrectClassForWebElement(WebElement webElementToBeChecked) {
-        return true;
     }
 
     /**
@@ -280,7 +257,7 @@ public class PageObject {
     public void setAttribute(String attributeName, String value) {
         String escapedValue = StringUtils.replace(value, "\"", "\\\"");
         String script = "arguments[0]." + attributeName + " = \"" + escapedValue + "\"";
-        getBrowser().executeJavaScript(script, this, value);
+        getBrowser().javaScript().execute(script, this, value);
     }
 
     /**
@@ -473,20 +450,6 @@ public class PageObject {
      */
     public <T extends PageObject> TypedFinder<T> find(Class<T> pageObjectClass) {
         return finder().find(pageObjectClass);
-    }
-
-    /**
-     * Invalidates this {@linkplain PageObject} forcing it to reinitialize
-     * itself when it is used again. This can be necessary when the element is
-     * modified by the system under test (e.g. moved).
-     *
-     * @since 0.9.9
-     * @deprecated caching was removed in v1.2 - this exists in order to NOT break the API till v1.3
-     */
-    @Deprecated
-    public void invalidate() {
-        // TODO: remove in v1.3
-        logger.warn("deprecated method 'invalidate()' used...");
     }
 
     /**

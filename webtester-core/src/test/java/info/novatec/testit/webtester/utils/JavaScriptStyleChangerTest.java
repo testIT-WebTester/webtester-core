@@ -22,6 +22,7 @@ import org.openqa.selenium.WebDriverException;
 import info.novatec.testit.webtester.api.browser.Browser;
 import info.novatec.testit.webtester.api.enumerations.CSSProperties;
 import info.novatec.testit.webtester.api.utils.CSSProperty;
+import info.novatec.testit.webtester.browser.operations.JavaScriptExecutor;
 import info.novatec.testit.webtester.pageobjects.PageObject;
 
 
@@ -32,6 +33,8 @@ public class JavaScriptStyleChangerTest {
     PageObject pageObject;
     @Mock
     Browser browser;
+    @Mock
+    JavaScriptExecutor executor;
 
     @InjectMocks
     JavaScriptStyleChanger cut;
@@ -39,13 +42,14 @@ public class JavaScriptStyleChangerTest {
     @Before
     public void stubPageObjectToReturnBrowser() {
         doReturn(browser).when(pageObject).getBrowser();
+        doReturn(executor).when(browser).javaScript();
     }
 
     @Test
     public void testThatCorrectScriptIsBuildWhenChangingSingleProperty() {
         boolean styleWasChanged = changeSingleProperty();
         assertThat(styleWasChanged, is(true));
-        verify(browser).executeJavaScript("arguments[0].style.backgroundColor='#214284';", pageObject);
+        verify(executor).execute("arguments[0].style.backgroundColor='#214284';", pageObject);
     }
 
     @Test
@@ -67,7 +71,7 @@ public class JavaScriptStyleChangerTest {
 
         String expectedScript = "arguments[0].style.outlineColor='#214284';" + "arguments[0].style.outlineStyle='solid';"
             + "arguments[0].style.outlineWidth='2px';";
-        verify(browser).executeJavaScript(expectedScript, pageObject);
+        verify(executor).execute(expectedScript, pageObject);
 
     }
 
@@ -87,7 +91,7 @@ public class JavaScriptStyleChangerTest {
     }
 
     private void throwExceptionOnJavaScriptExectution() {
-        doThrow(new WebDriverException()).when(browser).executeJavaScript(anyString(), any(PageObject.class));
+        doThrow(new WebDriverException()).when(executor).execute(anyString(), any(PageObject.class));
     }
 
 }

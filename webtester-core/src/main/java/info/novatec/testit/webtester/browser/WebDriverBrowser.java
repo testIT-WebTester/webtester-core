@@ -417,20 +417,6 @@ public class WebDriverBrowser implements Browser {
     }
 
     @Override
-    public WebDriverBrowser executeJavaScript(String script, PageObject pageObject, Object... parameters) {
-        // TODO: remove method in v1.3
-        javaScript().execute(script, pageObject, parameters);
-        return this;
-    }
-
-    @Override
-    public WebDriverBrowser executeJavaScript(String script, Object... parameters) {
-        // TODO: remove method in v1.3
-        javaScript().executeWithReturn(script, parameters);
-        return this;
-    }
-
-    @Override
     public WebDriverBrowser setFocusOnFrame(final int index) {
         executeAction(new BrowserCallback() {
 
@@ -492,7 +478,7 @@ public class WebDriverBrowser implements Browser {
 
             @Override
             public void execute(Browser browser) {
-                browser.executeJavaScript("arguments[0].scrollIntoView(true)", pageObject);
+                browser.javaScript().execute("arguments[0].scrollIntoView(true)", pageObject);
             }
 
         });

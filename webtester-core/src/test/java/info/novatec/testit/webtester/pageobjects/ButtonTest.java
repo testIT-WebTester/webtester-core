@@ -131,10 +131,4 @@ public class ButtonTest extends AbstractPageObjectTest {
         cut.validate(webElement);
     }
 
-    /* utilities */
-
-    private void assertThatCorrectnessOfClassIs(boolean expected) {
-        assertThat(cut.isCorrectClassForWebElement(webElement), is(expected));
-    }
-
 }

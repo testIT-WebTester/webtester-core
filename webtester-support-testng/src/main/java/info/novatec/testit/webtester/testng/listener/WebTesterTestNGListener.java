@@ -1,6 +1,5 @@
 package info.novatec.testit.webtester.testng.listener;
 
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -22,6 +21,9 @@ import info.novatec.testit.webtester.api.browser.Browser;
 import info.novatec.testit.webtester.api.config.Configuration;
 import info.novatec.testit.webtester.internal.ReflectionUtils;
 import info.novatec.testit.webtester.testng.annotations.ConfigurationValue;
+import info.novatec.testit.webtester.testng.annotations.CreateUsing;
+import info.novatec.testit.webtester.testng.annotations.EntryPoint;
+import info.novatec.testit.webtester.testng.annotations.Primary;
 import info.novatec.testit.webtester.testng.exceptions.NoManagedBrowserException;
 import info.novatec.testit.webtester.testng.exceptions.NoPrimaryBrowserException;
 import info.novatec.testit.webtester.testng.exceptions.NoUniquePrimaryBrowserException;
@@ -33,6 +35,75 @@ import info.novatec.testit.webtester.testng.listener.internal.TestClassPlausibil
 import info.novatec.testit.webtester.testng.listener.internal.WebTesterTestNGListenerAdapter;
 
 
+/**
+ * This {@link org.testng.ITestNGListener} takes care of the following
+ * life cycle management issues:
+ * <ul>
+ * <li>Creating {@link Browser browsers} for tests.</li>
+ * <li>Injecting {@link Browser browser} instances into static and instance
+ * fields of the test.</li>
+ * <li>Injection of configuration properties into static and instance fields.
+ * </li>
+ * <li>Closing {@link Browser browsers} at the end of their natural scope.</li>
+ * </ul>
+ * More precisely, any {@link Field field} of type {@link Browser browser}
+ * annotated with {@link Resource @Resource} and a value of <code>null</code>
+ * will have a new {@link Browser browser} instance injected. Non
+ * <code>null</code> fields which are annotated with {@link Resource @Resource}
+ * will still be managed, but the original {@link Browser browser} instance will
+ * be used. The {@link Browser browser} instances are created by using the
+ * factory provided with the {@link CreateUsing @CreateUsing} annotation.
+ * <p>
+ * Fields annotated with {@link ConfigurationValue @ConfigurationValue} will be
+ * injected with values from the primary browser's configuration. In case you
+ * are using more then one browser, {@link Primary @Primary} has to be used to
+ * declare one of them as the primary browser.
+ * <p>
+ * All of these operations are done regardless of field visibility (private,
+ * default, protected or public). Reflection is used to break open all
+ * visibility modifiers.
+ * <p>
+ * <b>Exaple test class:</b>
+ * <pre>
+ * <code>
+ * public class FooTest {
+ *
+ * &#64;Resource
+ * &#64;CreateUsing(FooBrowserFactory.class)
+ * &#64;EntryPoint("http://localhost:8080/login")
+ * private static Browser browser;
+ *
+ * &#64;ConfigurationValue("auth.username")
+ * private String username;
+ * &#64;ConfigurationValue("auth.password")
+ * private String password;
+ *
+ * private HomePage home;
+ *
+ * &#64;Before
+ * void executeLogin(){
+ * home = browser.create(LoginPage.class).login(username, password);
+ * }
+ *
+ * &#64;Test
+ * void testFooOnHomePage(){
+ * ...
+ * }
+ *
+ * ...
+ *
+ * }
+ * </code>
+ * </pre>
+ *
+ * @see Browser
+ * @see ConfigurationValue
+ * @see CreateUsing
+ * @see EntryPoint
+ * @see Primary
+ * @see Resource
+ * @since 1.2
+ */
 public class WebTesterTestNGListener extends WebTesterTestNGListenerAdapter {
 
     private List<ClassTestBrowser> classBrowsers = new ArrayList<>();
@@ -55,7 +126,7 @@ public class WebTesterTestNGListener extends WebTesterTestNGListenerAdapter {
 
     private void initializeClassLevel(ITestContext iTestContext) {
         classBrowsers.clear();
-        ITestNGMethod[] testMethods= iTestContext.getAllTestMethods();
+        ITestNGMethod[] testMethods = iTestContext.getAllTestMethods();
         for (ITestNGMethod method : testMethods) {
             Class<?> testClass = method.getRealClass();
             for (Field field : ReflectionUtils.getAllFieldsOfClassHierarchy(testClass)) {
@@ -81,7 +152,7 @@ public class WebTesterTestNGListener extends WebTesterTestNGListenerAdapter {
      */
     private boolean fieldIsNoDuplicateOfAnExistingClassBrowserField(Field field) {
         boolean isNoDuplicate = true;
-        for(Field classBrowserField : classBrowserFields) {
+        for (Field classBrowserField : classBrowserFields) {
             if (classBrowserField.equals(field)) {
                 isNoDuplicate = false;
             }
@@ -100,7 +171,7 @@ public class WebTesterTestNGListener extends WebTesterTestNGListenerAdapter {
     }
 
     private void injectConfigurationValuesIntoStaticFields(ITestContext iTestContext) {
-        ITestNGMethod[] testMethods= iTestContext.getAllTestMethods();
+        ITestNGMethod[] testMethods = iTestContext.getAllTestMethods();
         for (ITestNGMethod method : testMethods) {
             Class<?> testClass = method.getRealClass();
             if (configurationValuesAnnotationIsUsedOnClassLevel(testClass)) {

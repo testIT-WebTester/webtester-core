@@ -26,6 +26,7 @@
     - [Internet Explorer](chapters/support-ie.md)
   - Testing
     - [JUnit](chapters/support-junit.md)
+    - [TestNG](chapters/support-testng.md)
   - Integration
     - [Spring 4](chapters/support-spring4.md)
 - Advanced Topics

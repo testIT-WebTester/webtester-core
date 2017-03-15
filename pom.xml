@@ -43,13 +43,9 @@
 		<module>webtester-core</module>
 
 		<module>webtester-support-assertj</module>
-		<module>webtester-support-chrome</module>
-		<module>webtester-support-firefox</module>
 		<module>webtester-support-hamcrest</module>
-		<module>webtester-support-ie</module>
 		<module>webtester-support-junit</module>
 		<module>webtester-support-spring4</module>
-		<module>webtester-support-marionette</module>
 		<module>webtester-support-testng</module>
 
 	</modules>
@@ -192,6 +188,11 @@
 			<dependency>
 				<groupId>org.seleniumhq.selenium</groupId>
 				<artifactId>selenium-ie-driver</artifactId>
+				<version>${version.selenium}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.seleniumhq.selenium</groupId>
+				<artifactId>selenium-edge-driver</artifactId>
 				<version>${version.selenium}</version>
 			</dependency>
 			<dependency>

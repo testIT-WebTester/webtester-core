@@ -1,0 +1,45 @@
+// must be executed on a docker-enabled node
+node('docker-based-builds') {
+
+  // check out branch that triggered the build
+  stage('Checkout SCM') {
+    checkout scm
+  }
+
+  // load build environment docker container
+  def container = docker.image('caaqe/webtester2-build-environment:latest')
+  container.pull()
+  container.inside {
+
+    stage('Log Tool Versions') {
+      sh 'java -version'
+      sh 'git --version'
+      sh 'mvn --version'
+      sh 'gpg --version'
+    }
+
+    stage('Set Version to $VERSION') {
+      sh 'cd webtester-build-tools && mvn versions:set versions:commit -DnewVersion=$VERSION'
+      sh 'mvn versions:set versions:commit -DnewVersion=$VERSION'
+    }
+
+    stage('Build & Deploy to Sonatype OSS') {
+      // credentials for the repository are stored in Jenkins
+      withCredentials([usernamePassword(credentialsId: 'ossrh-credentials', passwordVariable: 'ossrhPassword', usernameVariable: 'ossrhUsername')]) {
+        // credentials for the GPG certificates are stored in Jenkins
+        withCredentials([string(credentialsId: 'webtester-gpg-passphrase', variable: 'gpgPassphrase')]) {
+
+          def skipTests = "-DskipTests=true"
+          def gpgPassphrase = "-Dgpg.passphrase=${gpgPassphrase}"
+          def repositoryCredentials = "-Dossrh.username=${ossrhUsername} -Dossrh.password=${ossrhPassword}"
+          def profiles = "-P documentation,release,maven-central"
+
+          sh "mvn clean deploy ${skipTests} ${gpgPassphrase} ${repositoryCredentials} ${profiles}"
+
+        }
+      }
+    }
+
+  }
+
+}
